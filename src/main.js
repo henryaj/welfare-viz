@@ -2,6 +2,7 @@ import { mount } from 'svelte';
 import { html as content, headings, meta } from 'virtual:content';
 import PainModel from './widgets/PainModel.svelte';
 import LifeDays from './widgets/LifeDays.svelte';
+import DietCalculator from './widgets/DietCalculator.svelte';
 import SufferingDays from './widgets/SufferingDays.svelte';
 import './style.css';
 
@@ -44,6 +45,7 @@ app.innerHTML = `
 const widgets = {
   'widget-pain-model': PainModel,
   'widget-life-days': LifeDays,
+  'widget-diet-calculator': DietCalculator,
   'widget-suffering-days': SufferingDays,
 };
 

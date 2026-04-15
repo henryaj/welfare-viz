@@ -85,24 +85,9 @@ This means different diets can represent very different numbers of life-days.
 If you eat a lot of chicken, this number could be very large. If you only eat
 beef, it'll be much smaller.
 
---- WIDGET:
+--- WIDGET: life-days comparison charts ---
 
-several bar charts, left to right. as the user scrolls, each bar chart appears
-sequentially (on mobile they should be shown stacked and all visible). 
-
-first shows the average lifespan of the different animals. second shows the
-mass of food each animal produces in its life. third shows the product of each.
-
-then, as the user scrolls, we see a grid of boxes, perhaps one each for fish
-(kg), eggs, milk (litres), chicken (kg), beef (kg). the numbers are controlled
-with sliders and default to the standard american diet. underneath there are
-buttons where users can switch between average american diet, average european
-diet, vegetarian diet, vegan diet. clicking them changes the numbers in the
-boxes. on the right is a stacked bar graph - each layer in the stack shows how
-many life-days per animal are in the diet.
-
-
----
+--- WIDGET: diet calculator ---
 
 This has some counterintuitive implications. Those aspiring to reduce suffering
 in their diets should cut out fish and eggs first -- per kg these cause by far
@@ -120,6 +105,8 @@ suffering-days per kg - not just life-days, but now weighted by how much we
 think different animals are capable of suffering.
 
 ---
+
+This is one of the problems with a lot of reducetarian diets: they often eliminate red meat in favour of chicken. 
 
 These are relatively simple models -- considering how many animals get eaten in
 a given diet, how many days of each animal's life that corresponds to, and how

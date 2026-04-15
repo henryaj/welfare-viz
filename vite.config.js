@@ -25,7 +25,7 @@ function contentPlugin() {
     // Replace --- WIDGET: <description> --- blocks with mount-point divs
     const widgetPattern = /---\s*WIDGET:\s*(.*?)(?:\n[\s\S]*?)---/g;
     let widgetIndex = 0;
-    const widgetIds = ['pain-model', 'life-days', 'suffering-days'];
+    const widgetIds = ['pain-model', 'life-days', 'diet-calculator', 'suffering-days'];
 
     const processed = body.replace(widgetPattern, (_match, _description) => {
       const id = widgetIds[widgetIndex] || `widget-${widgetIndex}`;
