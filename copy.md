@@ -108,6 +108,12 @@ calves taken away. Pigs and chickens are subject to the most painful procedures
 -- debeaking, castration without anesthetic, restrictions on movement. These
 are not captured in the above models.
 
+In Part 2, we'll add a further dimension: how bad each animal's life actually
+is. Not all life-days are equal -- a broiler chicken's six weeks of confinement
+is plausibly much worse than a dairy cow's years on pasture. Combining the
+number of animals, their capacity to suffer, and the quality of their lives
+gives us a more complete picture of the suffering in our food system.
+
 Likewise, we eat animals other than the ones listed here. Trillions of shrimp,
 for example, are farmed every year. There is increasing consensus that they are
 able to feel pain, and the procedures they are subjected to cause them to
