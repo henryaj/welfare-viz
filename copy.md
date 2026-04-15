@@ -99,7 +99,44 @@ many life-days per animal are in the diet.
 
 ---
 
-This has some counterintuitive implications. Those aspiring to reduce the
-suffering caused by their diets should cut out fish and eggs first -- per kg
-these cause by far the most amount of suffering. Cutting out beef should be
-done second last; eliminating milk is the lowest-impact diet intervention.
+This has some counterintuitive implications. Those aspiring to reduce suffering
+in their diets should cut out fish and eggs first -- per kg these cause by far
+the most amount of suffering. Cutting out beef should be done second last;
+eliminating milk is the lowest-impact diet intervention.
+
+A more sophisticated model would include both _how much_ each animal can
+suffer, and _how many_ of them are in your diet.
+
+--- WIDGET:
+
+suffering in your diet. same as the final chart in widget 2, but with the
+options for weighting on the left, before the diet numbers. now we have a
+suffering-days per kg - not just life-days, but now weighted by how much we
+think different animals are capable of suffering.
+
+---
+
+These are relatively simple models -- considering how many animals get eaten in
+a given diet, how many days of each animal's life that corresponds to, and how
+much those animals suffer, giving us a final accounting of how much suffering
+our diets cause.
+
+Of course, animals are treated very differently. It's plausible that
+pasture-raised cattle, for example, have enjoyable lives until they are
+slaughtered. Dairy cows are also relatively well-treated, although they go
+through regular cycles of artificial insemination, pregnancy, and having their
+calves taken away. Pigs and chickens are subject to the most painful procedures
+-- debeaking, castration without anesthetic, restrictions on movement. These
+are not captured in the above models.
+
+Likewise, we eat animals other than the ones listed here. Trillions of shrimp,
+for example, are farmed every year. There is increasing consensus that they are
+able to feel pain, and the procedures they are subjected to cause them to
+suffer.
+
+---
+
+If this changed your mind about animal welfare, consider donating to effective
+organisations which seek to reform the way we raise animals for food, pay for
+'offsets' to cover the animals you consume, and consider changing your diet to
+reduce the amount of suffering it causes.
