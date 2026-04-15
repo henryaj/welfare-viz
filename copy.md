@@ -1,4 +1,9 @@
-# Animal welfare, visualized
+---
+title: Animal welfare, visualized
+author: Henry Stanley
+created: 2026-04-14
+updated: 2026-04-14
+---
 
 It's hard to have a clear understanding of the experience of different farmed
 animals. How much can they feel pain? How much 'suffering' goes into each

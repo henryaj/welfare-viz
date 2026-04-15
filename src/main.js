@@ -1,5 +1,5 @@
 import { mount } from 'svelte';
-import { html as content, headings } from 'virtual:content';
+import { html as content, headings, meta } from 'virtual:content';
 import PainModel from './widgets/PainModel.svelte';
 import LifeDays from './widgets/LifeDays.svelte';
 import SufferingDays from './widgets/SufferingDays.svelte';
@@ -7,13 +7,6 @@ import './style.css';
 
 const app = document.getElementById('app');
 
-// Split out the h1 for the hero section
-const tmp = document.createElement('div');
-tmp.innerHTML = content;
-const h1 = tmp.querySelector('h1');
-const heroHTML = h1 ? h1.outerHTML : '';
-if (h1) h1.remove();
-const bodyHTML = tmp.innerHTML;
 
 // Build TOC from h2 headings
 const tocItems = headings
@@ -24,14 +17,19 @@ const tocItems = headings
 app.innerHTML = `
   <div class="hero">
     <div class="hero-gradient"></div>
-    <div class="hero-content">${heroHTML}</div>
+    <div class="hero-content">
+      <h1>${meta.title}</h1>
+      <div class="hero-meta">
+        <span class="hero-author">${meta.author}</span>
+      </div>
+    </div>
   </div>
   <div class="layout">
     <nav class="toc">
-      <div class="toc-title">${h1 ? h1.textContent : ''}</div>
+      <div class="toc-title">${meta.title}</div>
       <ul>${tocItems}</ul>
     </nav>
-    <article class="prose">${bodyHTML}</article>
+    <article class="prose">${content}</article>
   </div>
   <nav class="mobile-nav">
     <button class="mobile-nav-toggle">
