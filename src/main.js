@@ -21,7 +21,7 @@ app.innerHTML = `
     <div class="hero-content">
       <h1>${meta.title}</h1>
       <div class="hero-meta">
-        <a class="hero-author" href="https://henrystanley.com">${meta.author}</a>
+        <a class="hero-author" href="https://henrystanley.com" target="_blank" rel="noopener">${meta.author}</a>
       </div>
     </div>
   </div>

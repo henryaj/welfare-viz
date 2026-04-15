@@ -46,6 +46,9 @@ function contentPlugin() {
       headings.push({ text, slug, depth });
       return `<h${depth} id="${slug}"><a href="#${slug}">${text}</a></h${depth}>`;
     };
+    renderer.link = function ({ href, text }) {
+      return `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
+    };
 
     const html = marked(processed.replace(/ -- /g, ' \u2013 '), { renderer });
     return { html, headings, meta, widgetCopy };
