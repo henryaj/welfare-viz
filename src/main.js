@@ -28,10 +28,18 @@ app.innerHTML = `
   </div>
   <div class="layout">
     <nav class="toc">
+      <div class="toc-title">${h1 ? h1.textContent : ''}</div>
       <ul>${tocItems}</ul>
     </nav>
     <article class="prose">${bodyHTML}</article>
   </div>
+  <nav class="mobile-nav">
+    <button class="mobile-nav-toggle">
+      <span class="mobile-nav-section"></span>
+      <span class="mobile-nav-arrow">&#9660;</span>
+    </button>
+    <ul class="mobile-nav-menu">${tocItems}</ul>
+  </nav>
 `;
 
 // Mount widgets
@@ -47,3 +55,73 @@ for (const [id, Component] of Object.entries(widgets)) {
     mount(Component, { target });
   }
 }
+
+// Highlight active TOC link based on scroll position
+const tocLinks = document.querySelectorAll('.toc a');
+const sectionIds = headings.filter(h => h.depth === 1).map(h => h.slug);
+const mobileNavSection = document.querySelector('.mobile-nav-section');
+const sectionTitles = Object.fromEntries(
+  headings.filter(h => h.depth === 1).map(h => [h.slug, h.text])
+);
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+        mobileNavSection.textContent = sectionTitles[entry.target.id] || '';
+      }
+    }
+  },
+  { rootMargin: '0px 0px -60% 0px' }
+);
+
+for (const id of sectionIds) {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+}
+
+// Show TOC and title when the first paragraph scrolls out of view
+const hero = document.querySelector('.hero');
+const tocNav = document.querySelector('.toc');
+const tocTitle = document.querySelector('.toc-title');
+const firstParagraph = document.querySelector('.prose p:first-of-type');
+
+const scrollObserver = new IntersectionObserver(
+  ([entry]) => {
+    const pastIntro = !entry.isIntersecting;
+    tocNav.classList.toggle('visible', pastIntro);
+    tocTitle.classList.toggle('visible', pastIntro);
+  },
+  { threshold: 0 }
+);
+
+scrollObserver.observe(firstParagraph);
+
+// Mobile nav: show when past hero, toggle menu on tap
+const mobileNav = document.querySelector('.mobile-nav');
+const mobileToggle = document.querySelector('.mobile-nav-toggle');
+const mobileMenu = document.querySelector('.mobile-nav-menu');
+
+const heroObserver = new IntersectionObserver(
+  ([entry]) => {
+    mobileNav.classList.toggle('visible', !entry.isIntersecting);
+    if (entry.isIntersecting) mobileMenu.classList.remove('open');
+  },
+  { threshold: 0 }
+);
+heroObserver.observe(hero);
+
+mobileToggle.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+  mobileToggle.classList.toggle('open');
+});
+
+mobileMenu.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') {
+    mobileMenu.classList.remove('open');
+    mobileToggle.classList.remove('open');
+  }
+});

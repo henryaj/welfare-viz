@@ -35,7 +35,7 @@ function contentPlugin() {
       return `<h${depth} id="${slug}"><a href="#${slug}">${text}</a></h${depth}>`;
     };
 
-    const html = marked(processed, { renderer });
+    const html = marked(processed, { renderer, smartypants: true });
     return { html, headings };
   }
 
