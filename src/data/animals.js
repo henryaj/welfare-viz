@@ -49,6 +49,16 @@ export const animals = [
     rpIsProxy: false,
     uncertain: true, // neuron count extrapolated from zebrafish
   },
+  {
+    id: 'shrimp',
+    name: 'Shrimp',
+    totalNeurons: 100_000,
+    corticalNeurons: null, // no cortex
+    brainMass: 0.01,
+    rpWelfareRange: 0.03,
+    rpIsProxy: false,
+    uncertain: true, // very rough estimate
+  },
 ];
 
 export const HUMAN_NEURONS = 86_000_000_000;

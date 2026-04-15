@@ -75,6 +75,7 @@
     </div>
 
     <div class="chart-footnotes">
+      <p class="footnote" class:hidden={!weights.some(a => a.uncertain)}>* Data highly uncertain</p>
       <p class="footnote" class:hidden={!(selectedMode === 'rp-welfare' && weights.some(a => a.rpIsProxy))}>† Not directly studied by RP — using pig estimate as proxy</p>
     </div>
   </div>
