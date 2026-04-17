@@ -24,8 +24,10 @@ internal experiences and their ability to feel pain.
 There are many unanswered questions here: we're confident that vertebrates feel
 pain, but how intensely? We're increasingly confident that cephalopods like
 lobsters feel pain -- many countries have banned the practice of boiling these
-animals alive. Can insects feel pain? How can we weigh up the pain a chicken
+animals alive[^1]. Can insects feel pain? How can we weigh up the pain a chicken
 feels when it's being debeaked, versus a lamb being castrated?
+
+[^1]: Switzerland banned the practice in 2018. The UK followed in 2022, recognising some crustaceans and cephalopods as sentient beings.
 
 There are a few ways to tackle some of these questions.
 
@@ -52,7 +54,9 @@ considering an animal's capacity for pain.
 Fish, for example, don't have a cortex. But there's increasing consensus that
 they feel pain, too -- they have pain-like responses to things that might hurt
 them, and they are intelligent enough to use tools, learn from their
-experiences, and avoid locations where they've previously been hurt.
+experiences, and avoid locations where they've previously been hurt[^2].
+
+[^2]: Fish can navigate mazes, navigate mazes, remember specific people, and learn to avoid areas where they previously countered painful experiences (such as being shocked with electricity).
 
 Below, you can explore some different ways to think about how different animals
 might feel pain based on different assumptions -- whether it's just neuron
@@ -60,9 +64,11 @@ count that matters, log neurons (which increases the weight given to smaller
 animals), cortical neurons (which means that fish and shrimp don't count at
 all).
 
-We also include a midpoint weighting from Rethink Priorities research,
-which combines evidence from across neuroscience and behavioural studies to
-attempt to quantify different animals' moral weights.
+We also include a weighting from the Rethink Priorities Moral Weight
+Project[^3], which combines evidence from across neuroscience and behavioural
+studies to attempt to quantify different animals' moral weights.
+
+[^3]: Fischer et al. (2022). The values shown here are midpoint estimates from their welfare range framework.
 
 {{widget:pain-model}}
 

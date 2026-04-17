@@ -2,6 +2,49 @@ import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import fs from 'node:fs';
 import { marked } from 'marked';
+import markedFootnote from 'marked-footnote';
+
+function convertFootnotesToSidenotes(html) {
+  // Extract footnote definitions from the <section class="footnotes"> block
+  const sectionMatch = html.match(/<section class="footnotes"[\s\S]*?<\/section>/);
+  if (!sectionMatch) return html;
+
+  const footnotes = {};
+  const liPattern = /<li id="footnote-(\d+)">\s*<p>([\s\S]*?)<\/p>\s*<\/li>/g;
+  let m;
+  while ((m = liPattern.exec(sectionMatch[0])) !== null) {
+    // Strip the backref link from the content
+    const content = m[2].replace(/<a[^>]*data-footnote-backref[^>]*>[^<]*<\/a>/, '').trim();
+    footnotes[m[1]] = content;
+  }
+
+  // Replace each <sup> reference: put the label inline, but move the
+  // sidenote body outside the <p> so it doesn't break paragraph flow on mobile
+  let result = html;
+  const sidenoteMarkup = {};
+  for (const [id, content] of Object.entries(footnotes)) {
+    const refPattern = new RegExp(
+      `<sup><a id="footnote-ref-${id}"[^>]*>\\d+</a></sup>`
+    );
+    result = result.replace(refPattern,
+      `<label class="sidenote-number" for="sn-${id}">${id}</label><!--sidenote:${id}-->`
+    );
+    sidenoteMarkup[id] = `<input type="checkbox" id="sn-${id}" class="sidenote-toggle"/>` +
+      `<span class="sidenote"><span class="sidenote-inline-number">${id}.</span> ${content}</span>`;
+  }
+
+  // Move each sidenote to after its containing </p>
+  for (const [id, markup] of Object.entries(sidenoteMarkup)) {
+    result = result.replace(
+      new RegExp(`<!--sidenote:${id}-->([\\s\\S]*?)</p>`),
+      `$1</p>\n${markup}`
+    );
+  }
+
+  // Remove the footnotes section
+  result = result.replace(/<section class="footnotes"[\s\S]*?<\/section>/, '');
+  return result;
+}
 
 function contentPlugin() {
   const virtualModuleId = 'virtual:content';
@@ -50,7 +93,12 @@ function contentPlugin() {
       return `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
     };
 
-    const html = marked(processed.replace(/ -- /g, ' \u2013 '), { renderer });
+    marked.use(markedFootnote());
+    let html = marked(processed.replace(/ -- /g, ' \u2013 '), { renderer });
+
+    // Convert bottom-of-page footnotes into inline Tufte-style sidenotes
+    html = convertFootnotesToSidenotes(html);
+
     return { html, headings, meta, widgetCopy };
   }
 

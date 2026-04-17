@@ -210,6 +210,55 @@ body {
   margin: 2rem 0;
 }
 
+/* --- Tufte-style sidenotes --- */
+
+.sidenote-toggle {
+  display: none;
+}
+
+.sidenote-number {
+  font-size: 0.7rem;
+  vertical-align: super;
+  line-height: 0;
+  cursor: pointer;
+  color: #4d9fff;
+}
+
+.sidenote {
+  float: right;
+  clear: right;
+  margin-right: -240px;
+  width: 220px;
+  margin-top: -1.6em;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #888;
+}
+
+.sidenote-inline-number {
+  font-weight: 600;
+  color: #aaa;
+  margin-right: 0.2rem;
+}
+
+@media (max-width: 1200px) {
+  .sidenote {
+    display: none;
+    float: none;
+    margin: 0.5rem 0;
+    width: 100%;
+    padding: 0.75rem;
+    background: #1a1a1a;
+    border-radius: 4px;
+    border-left: 2px solid #4d9fff;
+  }
+
+  .sidenote-toggle:checked + .sidenote {
+    display: block;
+  }
+}
+
 /* --- Widget placeholders --- */
 
 .widget-mount {
