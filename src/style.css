@@ -100,9 +100,11 @@ body {
 .toc-title {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #fff;
   margin-bottom: 1rem;
+  text-decoration: underline dotted;
+  text-underline-offset: 4px;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -230,7 +232,7 @@ body {
   margin-right: -240px;
   width: 220px;
   margin-top: -1.6em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
   font-size: 0.8rem;
   line-height: 1.4;
   color: #888;
@@ -262,6 +264,7 @@ body {
 /* --- Widget placeholders --- */
 
 .widget-mount {
+  clear: right;
   margin: 2rem 0;
   padding: 1.5rem;
   border: 1px dashed #333;

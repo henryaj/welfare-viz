@@ -1,5 +1,5 @@
 ---
-title: Animal welfare, visualized
+title: Weighing animal minds
 author: Henry Stanley
 created: 2026-04-14
 updated: 2026-04-14
@@ -25,9 +25,10 @@ There are many unanswered questions here: we're confident that vertebrates feel
 pain, but how intensely? We're increasingly confident that cephalopods like
 lobsters feel pain -- many countries have banned the practice of boiling these
 animals alive[^1]. Can insects feel pain? How can we weigh up the pain a chicken
-feels when it's being debeaked, versus a lamb being castrated?
+feels when it's being debeaked against a lamb being castrated?
 
-[^1]: Switzerland banned the practice in 2018. The UK followed in 2022, recognising some crustaceans and cephalopods as sentient beings.
+[^1]: Switzerland banned the practice in 2018. The UK followed in 2022,
+    recognising some crustaceans and cephalopods as sentient beings.
 
 There are a few ways to tackle some of these questions.
 
@@ -56,7 +57,8 @@ they feel pain, too -- they have pain-like responses to things that might hurt
 them, and they are intelligent enough to use tools, learn from their
 experiences, and avoid locations where they've previously been hurt[^2].
 
-[^2]: Fish can navigate mazes, navigate mazes, remember specific people, and learn to avoid areas where they previously countered painful experiences (such as being shocked with electricity).
+[^2]: Fish can navigate mazes, navigate mazes, remember specific people, and
+    learn to avoid areas where they previously encountered painful experiences.
 
 Below, you can explore some different ways to think about how different animals
 might feel pain based on different assumptions -- whether it's just neuron
@@ -65,12 +67,17 @@ animals), cortical neurons (which means that fish and shrimp don't count at
 all).
 
 We also include a weighting from the Rethink Priorities Moral Weight
-Project[^3], which combines evidence from across neuroscience and behavioural
+Project, which combines evidence from across neuroscience and behavioural
 studies to attempt to quantify different animals' moral weights.
 
-[^3]: Fischer et al. (2022). The values shown here are midpoint estimates from their welfare range framework.
-
-{{widget:pain-model}}
+{{widget:pain-model
+  brain-mass: Implies double the brain size, double the amount of pain felt. But doesn't consider how many neurons are in the brain, or whether the extra parts of the brain in higher mammals are involved in feeling pain.
+  linear-neurons: Twice as many neurons means twice as much potential suffering. More plausible than brain mass, but assumes that all neurons are involved in feeling pain. This would for example mean that cows suffer only 3% as much as humans for the same experience.
+  neurons-squared: Pain capacity scales with the square of neuron count. A steep discount that makes small-brained animals nearly negligible, ignoring their ability to learn from pain to avoid it.
+  cortical-neurons: Only the cortex (or its equivalent) matters for suffering. Fish and shrimp have no cortex, so they get no weight, although we know they respond to painful stimuli and learn to avoid them over time.
+  log-neurons: Pain capacity scales with the logarithm of neuron count. This gives a flatter curve that gives smaller-brained animals more moral weight, implying that there are common brain structures involved in feeling pain (which is likely; sensing pain is important for an animal's survival and is probably evolutionarily conserved).
+  rp-welfare: Estimates from the Rethink Priorities Moral Weight Project, which combines neurophysiological and behavioural evidence into a weight for each animal.
+}}
 
 # Counting life-days per animal
 

@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import { animals, weightingModes } from '../data/animals.js';
   import { shared } from '../stores.svelte.js';
 
@@ -16,9 +17,11 @@
 
   function formatWeight(w) {
     if (w == null) return 'N/A';
-    if (w >= 0.01) return w.toFixed(2);
-    if (w >= 0.001) return w.toFixed(3);
-    return w.toExponential(1);
+    const pct = w * 100;
+    if (pct >= 10) return `${pct.toFixed(0)}%`;
+    if (pct >= 1) return `${pct.toFixed(1)}%`;
+    if (pct >= 0.01) return `${pct.toFixed(2)}%`;
+    return `<0.01%`;
   }
 </script>
 
@@ -39,21 +42,24 @@
             </svg>
             {wm.title}
           </span>
-          {#if shared.weightingMode === wm.id}
-            <span class="mode-desc">{wm.description}</span>
-          {/if}
         </label>
       {/each}
     </div>
+    <p class="controls-footnote">Values shown as % of a human (human = 100%).</p>
   </div>
 
   <div class="chart">
+    {#if copy[mode.id]}
+      {#key mode.id}
+        <div class="editorial" in:fade={{ duration: 200 }}>{copy[mode.id]}</div>
+      {/key}
+    {/if}
     <div class="bars">
     {#each weights as animal (animal.id)}
       <div class="bar-row">
         <span class="bar-label">
           {animal.name}
-          {#if animal.uncertain}
+          {#if animal.uncertain && animal.weight != null}
             <span class="uncertain-flag" title="Neuron count extrapolated from zebrafish — highly uncertain">*</span>
           {/if}
           {#if animal.rpIsProxy && shared.weightingMode === 'rp-welfare'}
@@ -76,7 +82,7 @@
     </div>
 
     <div class="chart-footnotes">
-      <p class="footnote" class:hidden={!weights.some(a => a.uncertain)}>* Data highly uncertain</p>
+      <p class="footnote" class:hidden={!weights.some(a => a.uncertain && a.weight != null)}>* Data highly uncertain</p>
       <p class="footnote" class:hidden={!(shared.weightingMode === 'rp-welfare' && weights.some(a => a.rpIsProxy))}>† Not directly studied by RP — using pig estimate as proxy</p>
     </div>
   </div>
@@ -142,6 +148,13 @@
     margin-bottom: 0.25rem;
   }
 
+  .controls-footnote {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 1rem;
+    line-height: 1.4;
+  }
+
   .mode-icon {
     width: 16px;
     height: 16px;
@@ -162,6 +175,17 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .editorial {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #aaa;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-left: 2px solid #4d9fff;
+    background: rgba(77, 159, 255, 0.05);
+    border-radius: 0 4px 4px 0;
   }
 
   .bars {
