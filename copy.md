@@ -99,7 +99,7 @@ beef, it'll be much smaller.
 {{widget:life-days
   lifespan: Dairy cows live for six years on average. Chickens raised for meat live for just 42 days.
   edible: Dairy cows produce a large amount of milk over their lifetime. Salmon, shrimp and chickens are small, so provide a tiny amount of food per animal.
-  lifedays: Combining the two, we see that shrimp, fish and eggs are by far the largest contributors to life-days.
+  lifedays: Combining the two, we see that shrimp, fish, eggs and chicken are by far the largest contributors to life-days.
 }}
 
 Now that we know how many days of life different foods represent, what does a
@@ -141,6 +141,10 @@ a given diet, how many days of each animal's life that corresponds to, and how
 much those animals suffer, giving us a final accounting of how much suffering
 our diets cause.
 
+There is a lot of uncertainty in these numbers. We haven't considered shrimp,
+which increasingly are thought to feel pain, or the fish that are farmed to be
+fed to the fish we eat, for example.
+
 Of course, animals are treated very differently. It's plausible that
 pasture-raised cattle, for example, have enjoyable lives until they are
 slaughtered. Dairy cows are also relatively well-treated, although they go
@@ -149,17 +153,15 @@ calves taken away. Pigs and chickens are subject to the most painful procedures
 -- debeaking, castration without anesthetic, restrictions on movement. These
 are not captured in the above models.
 
-In Part 2, we'll attempt to consider what life is like for different animals,
-and weave this into how their life-days ought to be weighed up, to give a
-clearer picture of our food system.
-
 ---
 
-If this changed your mind about animal welfare, consider [donating to effective
+**If this changed your mind about animal welfare, consider [donating to effective
 organisations](https://animalcharityevaluators.org/) which seek to reform the
 way we raise animals for food, [pay for
 'offsets'](https://www.farmkind.giving/) to cover the animals you consume, and
-consider changing your diet to reduce the amount of suffering it causes.
+consider changing your diet to reduce the amount of suffering it causes.**
+
+{{break}}
 
 # Sources and methodology
 

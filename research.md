@@ -4,58 +4,7 @@ Compiled April 2026. All numbers should be cross-checked against primary sources
 
 ---
 
-## 1. Per Capita Animal Product Consumption
-
-### United States (per person per year, retail/boneless weight unless noted)
-
-Source: USDA ERS Food Availability data; USDA WASDE projections.
-
-| Product | Amount | Unit | Year | Notes |
-|---|---|---|---|---|
-| Broiler chicken | ~102 | lbs | 2024–25 | Retail weight. Most consumed meat in US. |
-| Beef | ~58 | lbs | 2024–25 | Retail weight. Declining long-term trend. |
-| Pork | ~50 | lbs | 2024–25 | Retail weight. Relatively stable over decades. |
-| Turkey | ~13 | lbs | 2025 | Declining from ~15 lbs in 2021. |
-| Fish & shellfish | ~19 | lbs | 2019 | Most recent ERS figure (edible weight). |
-| Eggs | ~22 dozen | per year | 2025 | ~264 eggs/year. |
-| Milk/dairy | ~655 | lbs | 2021 | All dairy products, milk-equivalent. [VERIFY] |
-| **Total meat** | **~226** | **lbs** | **2025** | **Red meat + poultry combined.** |
-
-### Europe (approximate, per person per year)
-
-Source: FAO Food Balance Sheets; Eurostat.
-
-| Product | Amount | Unit | Notes |
-|---|---|---|---|
-| Poultry | ~25 | kg (~55 lbs) | Lower than US. Varies hugely by country. |
-| Pork | ~32 | kg (~70 lbs) | Higher than US; dominant meat in many EU countries. |
-| Beef | ~15 | kg (~33 lbs) | About half US levels. |
-| Fish & seafood | ~24 | kg (~53 lbs) | Higher than US, esp. Portugal, Spain, Scandinavia. |
-| Eggs | ~220 | eggs/year | Roughly comparable to US. |
-
-### UK specifically
-
-Source: DEFRA Family Food Survey; AHDB.
-
-| Product | Amount | Unit | Notes |
-|---|---|---|---|
-| Poultry | ~30 | kg/year | UK eats more chicken than EU average. |
-| Beef | ~17 | kg/year | |
-| Pork | ~22 | kg/year | Including bacon, ham. |
-| Fish | ~20 | kg/year | |
-| Eggs | ~200 | eggs/year | [VERIFY against latest DEFRA data] |
-
-### Vegetarian & Vegan
-
-For the widget presets, the vegetarian diet replaces all meat with increased dairy and eggs. Approximate annual consumption:
-
-- **Lacto-ovo vegetarian**: 0 meat/fish, ~300 eggs/year, ~700 lbs dairy equivalent/year. Heavier reliance on cheese, yoghurt.
-- **Pescatarian**: 0 land-animal meat, ~25 lbs fish/year, eggs and dairy similar to omnivore.
-- **Vegan**: 0 animal products. Widget should output zero suffering-days (for farmed animals; wild-animal crop deaths are out of scope).
-
----
-
-## 2. Farming Data Per Animal (for Widget 1: Suffering Days)
+## 1. Farming Data Per Animal (for Widget 1: Suffering Days)
 
 Source: Tomasik, "How Much Direct Suffering Is Caused by Various Animal Foods?" (2007, updated 2018). Cross-referenced with USDA data.
 
@@ -108,7 +57,7 @@ For per-calorie or per-portion conversion, divide by kcal/kg of the product.
 
 ---
 
-## 3. Neuron Counts and Brain Data (for Widget 2: Weighting)
+## 2. Neuron Counts and Brain Data (for Widget 2: Weighting)
 
 Sources: Wikipedia "List of animals by number of neurons" (compiled from Herculano-Houzel et al.); UW faculty.washington.edu/chudler brain facts; Eukaryote Writes Blog; various papers as cited.
 
@@ -134,7 +83,7 @@ The EA Forum post "Neuron Count-Based Measures May Currently Underweight Sufferi
 
 ---
 
-## 4. Moral Weighting Functions (for Widget 2)
+## 3. Moral Weighting Functions (for Widget 2)
 
 ### Function definitions
 
@@ -244,7 +193,7 @@ Binary/categorical approach approximating most people's revealed preferences.
 
 ---
 
-## 5. Global Scale Numbers (for Widget 3)
+## 4. Global Scale Numbers (for Widget 3)
 
 ### Animals farmed per year (slaughtered)
 
@@ -284,7 +233,7 @@ Binary/categorical approach approximating most people's revealed preferences.
 
 ---
 
-## 6. Key Sources and Further Reading
+## 5. Key Sources and Further Reading
 
 ### Primary data sources
 - **Tomasik**: "How Much Direct Suffering Is Caused by Various Animal Foods?" — https://reducing-suffering.org/how-much-direct-suffering-is-caused-by-various-animal-foods/
@@ -320,7 +269,7 @@ Binary/categorical approach approximating most people's revealed preferences.
 
 ---
 
-## 7. Known Data Gaps and Caveats
+## 6. Known Data Gaps and Caveats
 
 1. **Fish neuron counts are extrapolated from zebrafish.** No direct count exists for any commercially farmed fish species. This is the single largest data gap in the entire field.
 2. **Shrimp/crustacean neuron counts are very rough.** Few direct counts; estimates are order-of-magnitude at best.

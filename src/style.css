@@ -212,6 +212,14 @@ body {
   margin: 2rem 0;
 }
 
+.prose hr + h1 {
+  margin-top: 5rem;
+}
+
+.prose .section-break {
+  height: 5rem;
+}
+
 /* --- Tufte-style sidenotes --- */
 
 .sidenote-toggle {

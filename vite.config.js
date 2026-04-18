@@ -79,7 +79,8 @@ function contentPlugin() {
         widgetCopy[id] = copy;
       }
       return `<div id="widget-${id}" class="widget-mount"></div>`;
-    });
+    })
+    .replace(/\{\{break\}\}/g, '<div class="section-break"></div>');
 
     // Collect headings for TOC and add anchor IDs
     const headings = [];
