@@ -31,6 +31,7 @@ export const presets = {
   european:    { label: 'European',    values: { beef: 15, pork: 32, chicken: 25, fish: 24, eggs: 220, milk: 250 } },
   american:    { label: 'American',    values: { beef: 26, pork: 23, chicken: 46, fish: 9,  eggs: 264, milk: 297 } },
   uk:          { label: 'British',          values: { beef: 17, pork: 22, chicken: 30, fish: 20, eggs: 200, milk: 250 } },
+  pescatarian: { label: 'Pescatarian', values: { beef: 0,  pork: 0,  chicken: 0,  fish: 40, eggs: 250, milk: 280 } },
   vegetarian:  { label: 'Vegetarian',  values: { beef: 0,  pork: 0,  chicken: 0,  fish: 0,  eggs: 300, milk: 320 } },
   vegan:       { label: 'Vegan',       values: { beef: 0,  pork: 0,  chicken: 0,  fish: 0,  eggs: 0,   milk: 0   } },
 };

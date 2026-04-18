@@ -1,27 +1,14 @@
 <script>
   import { farmedAnimals } from '../data/farming.js';
+  import { fade } from 'svelte/transition';
 
   let { copy = {} } = $props();
-  let chartVisible = $state([false, false, false]);
-  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
 
-  function observeChart(node, idx) {
-    if (isMobile) {
-      chartVisible[idx] = true;
-      return;
-    }
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          chartVisible[idx] = true;
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-    obs.observe(node);
-    return { destroy: () => obs.disconnect() };
-  }
+  let active = $state(0);
+  let revealed = $state(0);
+  let started = $state(false);
+  let container;
+  let revealTimer;
 
   const byValue = (a, b) => b.value - a.value;
   const lifespanData = farmedAnimals.map(a => ({ name: a.name, value: a.lifespanDays, color: a.color })).sort(byValue);
@@ -33,9 +20,9 @@
   })).sort(byValue);
 
   const charts = [
-    { title: 'Average lifespan', unit: 'days', data: lifespanData, copy: copy.lifespan },
-    { title: 'Edible food per animal', unit: 'kg', data: edibleData, clipMax: true, copy: copy.edible },
-    { title: 'Life-days per kg', unit: 'days/kg', data: lifeDaysData, clipMax: true, copy: copy.lifedays },
+    { title: 'Average lifespan', unit: 'days', data: lifespanData, copyKey: 'lifespan' },
+    { title: 'Edible food per animal', unit: 'kg', data: edibleData, clipMax: true, copyKey: 'edible' },
+    { title: 'Life-days per kg', unit: 'days/kg', data: lifeDaysData, clipMax: true, copyKey: 'lifedays' },
   ];
 
   function chartMax(chart) {
@@ -52,53 +39,160 @@
     if (v >= 1) return v.toFixed(1);
     return v.toFixed(2);
   }
+
+  function startReveal() {
+    clearInterval(revealTimer);
+    revealed = 0;
+    const total = charts[active].data.length;
+    revealTimer = setInterval(() => {
+      revealed += 1;
+      if (revealed >= total) clearInterval(revealTimer);
+    }, 180);
+  }
+
+  function go(i) {
+    const next = (i + charts.length) % charts.length;
+    if (next === active && started) return;
+    active = next;
+    started = true;
+    startReveal();
+  }
+
+  function observe(node) {
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          started = true;
+          startReveal();
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(node);
+    return { destroy: () => { obs.disconnect(); clearInterval(revealTimer); } };
+  }
 </script>
 
-<div class="life-days-widget">
-  {#each charts as chart, i}
-    <div
-      class="chart-panel"
-      class:visible={chartVisible[i]}
-      use:observeChart={i}
-    >
-      <h3 class="chart-title">{chart.title}</h3>
-      {#if chart.copy}<p class="chart-copy">{chart.copy}</p>{/if}
-      {#each chart.data as row}
-        {@const max = chartMax(chart)}
+<div class="life-days-widget" bind:this={container} use:observe>
+  <div class="header">
+    <h3 class="chart-title">{charts[active].title}</h3>
+    <div class="nav">
+      <button class="nav-btn" aria-label="Previous" onclick={() => go(active - 1)}>‹</button>
+      <div class="dots">
+        {#each charts as _, i}
+          <button
+            class="dot"
+            class:active={i === active}
+            aria-label={`Chart ${i + 1}`}
+            onclick={() => go(i)}
+          ></button>
+        {/each}
+      </div>
+      <button class="nav-btn" aria-label="Next" onclick={() => go(active + 1)}>›</button>
+    </div>
+  </div>
+
+  {#key active}
+    <div class="chart-panel" in:fade={{ duration: 250 }}>
+      {#if copy[charts[active].copyKey]}
+        <p class="chart-copy">{copy[charts[active].copyKey]}</p>
+      {/if}
+      {#each charts[active].data as row, i}
+        {@const max = chartMax(charts[active])}
         {@const pct = (row.value / max) * 100}
         {@const clipped = pct > 100}
-        <div class="bar-row">
+        {@const shown = started && i < revealed}
+        <div class="bar-row" class:shown>
           <span class="bar-label">{row.name}</span>
           <div class="bar-track">
             <div
               class="bar-fill"
               class:clipped
-              style="width: {Math.min(pct, 100)}%; background: {row.color}"
+              style="width: {shown ? Math.min(pct, 100) : 0}%; background: {row.color}"
             ></div>
           </div>
-          <span class="bar-value">{formatVal(row.value)} <span class="bar-unit">{chart.unit}</span></span>
+          <span class="bar-value">{formatVal(row.value)} <span class="bar-unit">{charts[active].unit}</span></span>
         </div>
       {/each}
     </div>
-  {/each}
+  {/key}
 </div>
 
 <style>
   .life-days-widget {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+
+  .chart-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+    margin: 0;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: #aaa;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .nav-btn:hover {
+    border-color: #4d9fff;
+    color: #fff;
+  }
+
+  .dots {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0 0.25rem;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #333;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .dot:hover {
+    background: #555;
+  }
+
+  .dot.active {
+    background: #4d9fff;
   }
 
   .chart-panel {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .chart-panel.visible {
-    opacity: 1;
-    transform: translateY(0);
+    min-height: 200px;
   }
 
   .chart-copy {
@@ -108,19 +202,17 @@
     line-height: 1.5;
   }
 
-  .chart-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #fff;
-    margin-bottom: 0.75rem;
-  }
-
   .bar-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.4rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .bar-row.shown {
+    opacity: 1;
   }
 
   .bar-label {
@@ -141,7 +233,7 @@
   .bar-fill {
     height: 100%;
     border-radius: 3px;
-    transition: width 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     min-width: 2px;
   }
 

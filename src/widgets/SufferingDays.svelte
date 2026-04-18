@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import { animals } from '../data/animals.js';
   import { farmedAnimals, lifeDaysPerKg, products, presets } from '../data/farming.js';
 
@@ -59,6 +60,12 @@
       >{preset.label}</button>
     {/each}
   </div>
+
+  {#if copy[activePreset]}
+    {#key activePreset}
+      <div class="editorial" in:fade={{ duration: 200 }}>{copy[activePreset]}</div>
+    {/key}
+  {/if}
 
   <div class="stacked-bar">
     {#each breakdown as segment}
@@ -130,6 +137,17 @@
     border-color: #4d9fff;
     color: #fff;
     background: rgba(77, 159, 255, 0.1);
+  }
+
+  .editorial {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #aaa;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-left: 2px solid #4d9fff;
+    background: rgba(77, 159, 255, 0.05);
+    border-radius: 0 4px 4px 0;
   }
 
   .stacked-bar {

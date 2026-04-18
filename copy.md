@@ -127,7 +127,14 @@ eliminating milk is the lowest-impact diet intervention.
 A more sophisticated model would include both _how much_ each animal can
 suffer, and _how many_ of them are in your diet.
 
-{{widget:suffering-days}}
+{{widget:suffering-days
+  european: European diets are dominated by the poor welfare of farmed fish and their small size.
+  american: Americans eat more chickens and fish, with chickens the largest source of suffering.
+  uk: Brits are similar to Europeans, but score slightly better due to eating less fish.
+  pescatarian: A typical pescatarian diet relies heavily on fish.
+  vegetarian: Vegetarian diets cause drastically less suffering than diets which include meat or fish.
+  vegan: Vegan diets cut out most animal suffering, although crop farming inevitably causes some small mammals to be killed (not modelled here).
+}}
 
 These are relatively simple models -- considering how many animals get eaten in
 a given diet, how many days of each animal's life that corresponds to, and how
@@ -156,10 +163,27 @@ consider changing your diet to reduce the amount of suffering it causes.
 
 # Sources and methodology
 
-**Pain weighting models.** The neuron-based models (linear, log, squared, cortical) use neuron counts from [Herculano-Houzel (2009)](https://doi.org/10.3389/neuro.09.031.2009). Salmon neuron counts are extrapolated from zebrafish data and are highly uncertain. Shrimp neuron counts are rough estimates from the literature.
+**Pain weighting models.** The neuron-based models (linear, log, squared,
+cortical) use neuron counts from [Herculano-Houzel
+(2009)](https://doi.org/10.3389/neuro.09.031.2009). Salmon neuron counts are
+extrapolated from zebrafish data and are highly uncertain. Shrimp neuron counts
+are rough estimates from the literature.
 
-**Rethink Priorities welfare ranges.** The RP welfare range estimates are midpoint values from the [Rethink Priorities Moral Weight Project](https://rethinkpriorities.org/research-area/moral-weight/) (Fischer et al., 2022), which combines neurophysiological and behavioural evidence to estimate different species' capacity for welfare. Cows were not directly studied by RP -- we use the pig estimate (0.55) as a proxy.
+**Rethink Priorities welfare ranges.** The RP welfare range estimates are
+midpoint values from the [Rethink Priorities Moral Weight
+Project](https://rethinkpriorities.org/research-area/moral-weight/) (Fischer et
+al., 2022), which combines neurophysiological and behavioural evidence to
+estimate different species' capacity for welfare. Cows were not directly
+studied by RP -- we use the pig estimate (0.55) as a proxy.
 
-**Lifespan and yield data.** Farmed animal lifespans and edible yields are drawn from [Tomasik (2007, updated 2018)](https://reducing-suffering.org/how-much-direct-suffering-is-caused-by-various-animal-foods/) and USDA statistics. Dairy cow "edible kg" represents total milk yield over a six-year lifespan. Egg yield is measured in eggs rather than kg (one egg ≈ 55g).
+**Lifespan and yield data.** Farmed animal lifespans and edible yields are
+drawn from [Tomasik (2007, updated
+2018)](https://reducing-suffering.org/how-much-direct-suffering-is-caused-by-various-animal-foods/)
+and USDA statistics. Dairy cow "edible kg" represents total milk yield over a
+six-year lifespan. Egg yield is measured in eggs rather than kg (one egg ≈
+55g).
 
-**Diet composition.** Per-capita consumption figures for European, American, and British diets are based on FAOSTAT and USDA food availability data. The vegetarian preset assumes eggs and dairy only; the vegan preset is zero for all animal products.
+**Diet composition.** Per-capita consumption figures for European, American,
+and British diets are based on FAOSTAT and USDA food availability data. The
+vegetarian preset assumes eggs and dairy only; the vegan preset is zero for all
+animal products.
