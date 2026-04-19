@@ -1,9 +1,25 @@
 <script>
+  // Mounted at {{widget:pain-model}}.
+  // Lets the reader compare farmed animals under different moral-weight models
+  // (brain mass, linear/log/squared neurons, cortical neurons, RP welfare ranges).
+  // Bar values are expressed as a percentage of a human. The `copy` prop carries
+  // a per-mode editorial paragraph keyed by mode id; key order there also drives
+  // the button order.
   import { fade } from 'svelte/transition';
   import { animals, weightingModes } from '../data/animals.js';
   import { shared } from '../stores.svelte.js';
 
   let { copy = {} } = $props();
+
+  let orderedModes = $derived.by(() => {
+    const copyKeys = Object.keys(copy);
+    if (copyKeys.length === 0) return weightingModes;
+    return [...weightingModes].sort((a, b) => {
+      const ai = copyKeys.indexOf(a.id);
+      const bi = copyKeys.indexOf(b.id);
+      return (ai === -1 ? Infinity : ai) - (bi === -1 ? Infinity : bi);
+    });
+  });
 
   let mode = $derived(weightingModes.find(m => m.id === shared.weightingMode));
 
@@ -28,7 +44,7 @@
 <div class="pain-model">
   <div class="controls">
     <div class="modes">
-      {#each weightingModes as wm}
+      {#each orderedModes as wm}
         <label class="mode-option" class:selected={shared.weightingMode === wm.id} class:recommended={wm.id === 'rp-welfare'}>
           <input
             type="radio"

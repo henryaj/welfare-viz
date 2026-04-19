@@ -1,4 +1,11 @@
 <script>
+  // Mounted at {{widget:life-days}}.
+  // Three-panel carousel building up the "life-days per kg" concept:
+  //   1. Average lifespan by animal
+  //   2. Edible food per animal
+  //   3. Life-days per kg of product (1 / 2)
+  // Each panel's bars fill sequentially when it enters view or is navigated to.
+  // Copy keys (`lifespan`, `edible`, `lifedays`) carry per-panel editorial text.
   import { farmedAnimals } from '../data/farming.js';
   import { fade } from 'svelte/transition';
 

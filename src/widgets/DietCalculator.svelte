@@ -1,4 +1,9 @@
 <script>
+  // Mounted at {{widget:diet-calculator}} (Part 2, currently parked).
+  // Interactive diet builder: reader picks a preset (European, American, British,
+  // Pescatarian, Vegetarian, Vegan) or drags sliders per product, and sees the
+  // total life-days per year broken out as a stacked bar. Preset numbers live
+  // in src/data/farming.js and are provisional pending Part 2 sourcing work.
   import { farmedAnimals, lifeDaysPerKg, products, presets, sliderMax } from '../data/farming.js';
 
   let { copy = {} } = $props();

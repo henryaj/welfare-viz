@@ -1,4 +1,9 @@
 <script>
+  // Mounted at {{widget:suffering-days}} (Part 2, currently parked).
+  // Multiplies each product's life-days by the Rethink Priorities welfare-range
+  // weight to produce "suffering-days per year" for each diet preset. Renders
+  // a stacked bar + legend + total, with a per-preset editorial callout
+  // sourced from the copy prop (keys match preset ids).
   import { fade } from 'svelte/transition';
   import { animals } from '../data/animals.js';
   import { farmedAnimals, lifeDaysPerKg, products, presets } from '../data/farming.js';
