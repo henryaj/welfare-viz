@@ -52,6 +52,13 @@ crucial function in keeping an animal alive and causing it to move away from
 danger. The parts of the brain that evolved later might not be relevant in
 considering an animal's capacity for pain.
 
+But pain circuitry is a small, evolutionarily conserved sliver of the brain.
+The structures that matter, like the brainstem, thalamus, and cingulate, are
+broadly shared across vertebrates. Sensing injury is too useful to reinvent.
+Most of the extra tissue in a cow's brain is running a larger body, not feeling
+more pain. Counting every neuron treats all of it as pain-relevant, and it
+almost certainly isn't.
+
 Fish don't have a cortex like mammals[^2]. But there's increasing consensus that
 they feel pain, too -- they have pain-like responses to things that might hurt
 them, and they are intelligent enough to use tools, learn from their
@@ -65,9 +72,10 @@ count that matters, log neurons (which increases the weight given to smaller
 animals), cortical neurons (which means that fish and shrimp don't count at
 all).
 
-We also include a weighting from the Rethink Priorities Moral Weight
-Project, which combines evidence from across neuroscience and behavioural
-studies to attempt to quantify different animals' moral weights.
+We also include a weighting from the [Rethink Priorities Moral Weight
+Project](https://rethinkpriorities.org/research-area/welfare-range-estimates/),
+which combines evidence from across neuroscience and behavioural studies to
+attempt to quantify different animals' moral weights.
 
 {{widget:pain-model
   brain-mass: Implies double the brain size, double the amount of pain felt. But doesn't consider how many neurons are in the brain, or whether the extra parts of the brain in higher mammals are involved in feeling pain.
@@ -106,16 +114,6 @@ weights with real-world diet composition to see how much suffering different
 diets actually cause -- and work through the surprising implications for what
 to cut back on first.
 
----
-
-*If the idea that animals' experiences might differ this much already changes
-how you think, consider [donating to effective
-organisations](https://animalcharityevaluators.org/) which seek to reform the
-way we raise animals for food, [pay for
-'offsets'](https://www.farmkind.giving/) to cover the animals you consume, or
-think about where you could cut back.*
-
-{{break}}
 
 # Sources and methodology
 

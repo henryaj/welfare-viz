@@ -68,6 +68,15 @@ are not captured in the above models.
 
 ---
 
+*If the idea that animals' experiences might differ this much already changes
+how you think, consider [donating to effective
+organisations](https://animalcharityevaluators.org/) which seek to reform the
+way we raise animals for food, [pay for
+'offsets'](https://www.farmkind.giving/) to cover the animals you consume, or
+think about where you could cut back.*
+
+{{break}}
+
 ## Sources bullet list (dropped from copy.md)
 
 **Diet composition.** Per-capita consumption figures vary in provenance. Fish
