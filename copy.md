@@ -117,22 +117,22 @@ to cut back on first.
 
 # Sources and methodology
 
-**Pain weighting models.** The neuron-based models (linear, log, squared,
-cortical) use neuron counts from [Herculano-Houzel
+**Pain weighting models.** We use neuron counts from [Herculano-Houzel
 (2009)](https://doi.org/10.3389/neuro.09.031.2009). Salmon neuron counts are
-extrapolated from zebrafish data and are highly uncertain. Shrimp neuron counts
-are rough estimates from the literature.
+extrapolated from zebrafish data and are highly uncertain.
 
 **Rethink Priorities welfare ranges.** The RP welfare range estimates are
 midpoint values from the [Rethink Priorities Moral Weight
-Project](https://rethinkpriorities.org/research-area/moral-weight/) (Fischer et
-al., 2022), which combines neurophysiological and behavioural evidence to
-estimate different species' capacity for welfare. Cows were not directly
-studied by RP -- we use the pig estimate (0.55) as a proxy.
+Project](https://rethinkpriorities.org/research-area/an-introduction-to-the-moral-weight-project/)
+(Fischer et al., 2022), which combines neurophysiological and behavioural
+evidence to estimate different species' capacity for welfare. Cows were not
+directly studied by RP so we use the pig estimate (0.55) per [this
+comment](https://forum.effectivealtruism.org/posts/tnSg6o7crcHFLc395/the-welfare-range-table?commentId=qkrSRQY6kSwkDmXZB)
+from Fischer.
 
 **Lifespan and yield data.** Farmed animal lifespans and edible yields are
 drawn from [Tomasik (2007, updated
 2018)](https://reducing-suffering.org/how-much-direct-suffering-is-caused-by-various-animal-foods/)
 and USDA statistics. Dairy cow "edible kg" represents total milk yield over a
-six-year lifespan. Egg yield is measured in eggs rather than kg (one egg ≈
-55g).
+six-year lifespan. Egg yield is measured in individual eggs (assuming one egg
+weighs 55g).
