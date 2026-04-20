@@ -144,7 +144,7 @@
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 0.95rem;
-    color: #fff;
+    color: var(--text-strong);
     margin: 0;
   }
 
@@ -156,8 +156,8 @@
 
   .nav-btn {
     background: transparent;
-    border: 1px solid #333;
-    color: #aaa;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
     width: 28px;
     height: 28px;
     border-radius: 4px;
@@ -169,8 +169,8 @@
   }
 
   .nav-btn:hover {
-    border-color: #4d9fff;
-    color: #fff;
+    border-color: var(--accent);
+    color: var(--text-strong);
   }
 
   .dots {
@@ -183,7 +183,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #333;
+    background: var(--border);
     border: none;
     padding: 0;
     cursor: pointer;
@@ -191,11 +191,11 @@
   }
 
   .dot:hover {
-    background: #555;
+    background: var(--text-ghost);
   }
 
   .dot.active {
-    background: #4d9fff;
+    background: var(--accent);
   }
 
   .chart-panel {
@@ -204,7 +204,7 @@
 
   .chart-copy {
     font-size: 0.85rem;
-    color: #888;
+    color: var(--text-faint);
     margin-bottom: 0.75rem;
     line-height: 1.5;
   }
@@ -225,14 +225,14 @@
   .bar-label {
     flex: 0 0 100px;
     font-size: 0.75rem;
-    color: #aaa;
+    color: var(--text-dim);
     text-align: right;
   }
 
   .bar-track {
     flex: 1;
     height: 20px;
-    background: #1a1a1a;
+    background: var(--bg-subtle);
     border-radius: 3px;
     overflow: hidden;
   }
@@ -253,13 +253,13 @@
   .bar-value {
     flex: 0 0 110px;
     font-size: 0.75rem;
-    color: #888;
+    color: var(--text-faint);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
 
   .bar-unit {
-    color: #555;
+    color: var(--text-ghost);
   }
 
   @media (max-width: 1024px) {

@@ -123,30 +123,30 @@
   .mode-option {
     display: block;
     padding: 0.75rem;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     border-radius: 6px;
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
   }
 
   .mode-option:hover {
-    border-color: #555;
+    border-color: var(--text-ghost);
   }
 
   .mode-option.selected {
-    border-color: #4d9fff;
-    background: rgba(77, 159, 255, 0.08);
+    border-color: var(--accent);
+    background: var(--accent-bg);
   }
 
   .mode-option.recommended {
     border-width: 2px;
-    border-color: #6b5a2d;
-    background: linear-gradient(135deg, rgba(200, 170, 50, 0.06) 0%, transparent 60%);
+    border-color: var(--recommended-border);
+    background: linear-gradient(135deg, var(--recommended-bg) 0%, transparent 60%);
   }
 
   .mode-option.recommended.selected {
-    border-color: #c8aa32;
-    background: linear-gradient(135deg, rgba(200, 170, 50, 0.12) 0%, transparent 60%);
+    border-color: var(--recommended-border-selected);
+    background: linear-gradient(135deg, var(--recommended-bg-selected) 0%, transparent 60%);
   }
 
   .mode-option input {
@@ -160,13 +160,13 @@
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 0.9rem;
-    color: #fff;
+    color: var(--text-strong);
     margin-bottom: 0.25rem;
   }
 
   .controls-footnote {
     font-size: 0.75rem;
-    color: #666;
+    color: var(--text-faint);
     margin-top: 1rem;
     line-height: 1.4;
   }
@@ -180,7 +180,7 @@
   .mode-desc {
     display: block;
     font-size: 0.8rem;
-    color: #888;
+    color: var(--text-faint);
     line-height: 1.4;
   }
 
@@ -196,11 +196,11 @@
   .editorial {
     font-size: 0.85rem;
     line-height: 1.5;
-    color: #aaa;
+    color: var(--text-dim);
     padding: 0.75rem 1rem;
     margin-bottom: 1rem;
-    border-left: 2px solid #4d9fff;
-    background: rgba(77, 159, 255, 0.05);
+    border-left: 2px solid var(--accent);
+    background: var(--accent-bg-subtle);
     border-radius: 0 4px 4px 0;
   }
 
@@ -221,27 +221,27 @@
   .bar-label {
     flex: 0 0 80px;
     font-size: 0.85rem;
-    color: #ccc;
+    color: var(--text-muted);
     text-align: right;
   }
 
   .uncertain-flag,
   .proxy-flag {
-    color: #f0c040;
+    color: var(--flag);
     cursor: help;
   }
 
   .bar-track {
     flex: 1;
     height: 28px;
-    background: #1a1a1a;
+    background: var(--bg-subtle);
     border-radius: 4px;
     overflow: hidden;
   }
 
   .bar-fill {
     height: 100%;
-    background: #4d9fff;
+    background: var(--accent);
     border-radius: 4px;
     transition: width 0.5s ease;
     min-width: 2px;
@@ -251,22 +251,22 @@
   .bar-fill.uncertain {
     background: repeating-linear-gradient(
       -45deg,
-      #4d9fff,
-      #4d9fff 4px,
-      #3a7acc 4px,
-      #3a7acc 8px
+      var(--accent),
+      var(--accent) 4px,
+      var(--accent-stripe) 4px,
+      var(--accent-stripe) 8px
     );
   }
 
   .bar-fill.proxy {
-    border: 1px dashed #f0c040;
-    background: rgba(77, 159, 255, 0.6);
+    border: 1px dashed var(--flag);
+    background: var(--accent-bg-strong);
   }
 
   .bar-value {
     flex: 0 0 55px;
     font-size: 0.8rem;
-    color: #888;
+    color: var(--text-faint);
     font-variant-numeric: tabular-nums;
   }
 
@@ -275,7 +275,7 @@
   }
 
   .bar-value.no-data {
-    color: #555;
+    color: var(--text-ghost);
     font-style: italic;
   }
 
@@ -290,7 +290,7 @@
 
   .footnote {
     font-size: 0.75rem;
-    color: #666;
+    color: var(--text-faint);
     margin-bottom: 0.25rem;
   }
 

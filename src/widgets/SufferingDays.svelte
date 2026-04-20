@@ -105,13 +105,13 @@
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 0.95rem;
-    color: #fff;
+    color: var(--text-strong);
     margin-bottom: 0.75rem;
   }
 
   .chart-note {
     font-size: 0.8rem;
-    color: #888;
+    color: var(--text-faint);
     margin-bottom: 1rem;
   }
 
@@ -124,34 +124,34 @@
   .preset-btn {
     flex: 1;
     padding: 0.35rem 0.5rem;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     border-radius: 4px;
     background: none;
-    color: #aaa;
+    color: var(--text-dim);
     font-size: 0.8rem;
     cursor: pointer;
     transition: border-color 0.2s, color 0.2s, background 0.2s;
   }
 
   .preset-btn:hover {
-    border-color: #555;
-    color: #fff;
+    border-color: var(--text-ghost);
+    color: var(--text-strong);
   }
 
   .preset-btn.active {
-    border-color: #4d9fff;
-    color: #fff;
-    background: rgba(77, 159, 255, 0.1);
+    border-color: var(--accent);
+    color: var(--text-strong);
+    background: var(--accent-bg);
   }
 
   .editorial {
     font-size: 0.85rem;
     line-height: 1.5;
-    color: #aaa;
+    color: var(--text-dim);
     padding: 0.75rem 1rem;
     margin-bottom: 1rem;
-    border-left: 2px solid #4d9fff;
-    background: rgba(77, 159, 255, 0.05);
+    border-left: 2px solid var(--accent);
+    background: var(--accent-bg-subtle);
     border-radius: 0 4px 4px 0;
   }
 
@@ -160,7 +160,7 @@
     height: 36px;
     border-radius: 4px;
     overflow: hidden;
-    background: #1a1a1a;
+    background: var(--bg-subtle);
     margin-bottom: 1rem;
   }
 
@@ -191,11 +191,11 @@
   }
 
   .legend-label {
-    color: #aaa;
+    color: var(--text-dim);
   }
 
   .legend-value {
-    color: #888;
+    color: var(--text-faint);
     font-variant-numeric: tabular-nums;
   }
 
@@ -203,20 +203,20 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-top: 1px solid #333;
+    border-top: 1px solid var(--border);
     padding-top: 0.75rem;
   }
 
   .total-label {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.85rem;
-    color: #ccc;
+    color: var(--text-muted);
   }
 
   .total-value {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
     font-size: 1.4rem;
-    color: #fff;
+    color: var(--text-strong);
   }
 </style>

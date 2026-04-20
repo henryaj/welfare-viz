@@ -1,3 +1,60 @@
+:root {
+  /* Light theme (default) */
+  --bg: #f7f7f7;
+  --bg-elevated: #fff;
+  --bg-subtle: #ececec;
+  --text: #2a2a2a;
+  --text-strong: #0a0a0a;
+  --text-muted: #333;
+  --text-dim: #555;
+  --text-faint: #777;
+  --text-ghost: #aaa;
+  --border: #e0e0e0;
+  --border-strong: #ccc;
+  --border-subtle: #eee;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-stripe: #3a7acc;
+  --accent-bg: rgba(37, 99, 235, 0.08);
+  --accent-bg-subtle: rgba(37, 99, 235, 0.04);
+  --accent-bg-strong: rgba(37, 99, 235, 0.6);
+  --grid-dot: rgba(0, 0, 0, 0.06);
+  --bg-translucent: rgba(247, 247, 247, 0.93);
+  --flag: #b8860b;
+  --recommended-border: #d4a843;
+  --recommended-border-selected: #b8860b;
+  --recommended-bg: rgba(200, 170, 50, 0.1);
+  --recommended-bg-selected: rgba(200, 170, 50, 0.2);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --bg-elevated: #111;
+  --bg-subtle: #1a1a1a;
+  --text: #e0e0e0;
+  --text-strong: #fff;
+  --text-muted: #ccc;
+  --text-dim: #aaa;
+  --text-faint: #888;
+  --text-ghost: #555;
+  --border: #333;
+  --border-strong: #222;
+  --border-subtle: #1a1a1a;
+  --accent: #4d9fff;
+  --accent-hover: #79b8ff;
+  --accent-stripe: #3a7acc;
+  --accent-bg: rgba(77, 159, 255, 0.1);
+  --accent-bg-subtle: rgba(77, 159, 255, 0.05);
+  --accent-bg-strong: rgba(77, 159, 255, 0.6);
+  --grid-dot: rgba(255, 255, 255, 0.12);
+  --bg-translucent: rgba(10, 10, 10, 0.93);
+  --flag: #f0c040;
+  --recommended-border: #6b5a2d;
+  --recommended-border-selected: #c8aa32;
+  --recommended-bg: rgba(200, 170, 50, 0.06);
+  --recommended-bg-selected: rgba(200, 170, 50, 0.12);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,13 +69,13 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
-  color: #e0e0e0;
+  color: var(--text);
   background:
-    radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px) 0 0 / 24px 24px,
-    #0a0a0a;
+    radial-gradient(circle, var(--grid-dot) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--bg);
 }
 
-/* --- Hero with Stripe-style animated gradient --- */
+/* --- Hero with Stripe-style animated gradient (always dark) --- */
 
 .hero {
   position: relative;
@@ -73,6 +130,42 @@ body {
   font-size: 1rem;
 }
 
+/* --- Theme toggle --- */
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 200;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-translucent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.theme-toggle:hover {
+  color: var(--text-strong);
+  border-color: var(--border-strong);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
 /* --- Layout with TOC sidebar --- */
 
 .layout {
@@ -101,7 +194,7 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  color: #fff;
+  color: var(--text-strong);
   margin-bottom: 1rem;
   text-decoration: underline dotted;
   text-underline-offset: 4px;
@@ -122,7 +215,7 @@ body {
 }
 
 .toc a {
-  color: #888;
+  color: var(--text-faint);
   text-decoration: none;
   font-size: 0.85rem;
   line-height: 1.4;
@@ -131,11 +224,11 @@ body {
 }
 
 .toc a:hover {
-  color: #fff;
+  color: var(--text-strong);
 }
 
 .toc a.active {
-  color: #fff;
+  color: var(--text-strong);
 }
 
 @media (max-width: 1024px) {
@@ -173,7 +266,7 @@ body {
   font-size: 1.5rem;
   margin-top: 3rem;
   margin-bottom: 0.75rem;
-  color: #fff;
+  color: var(--text-strong);
 }
 
 .prose h1 a {
@@ -192,23 +285,23 @@ body {
 .prose > p:first-of-type {
   font-size: 1.25rem;
   font-weight: 500;
-  color: #fff;
+  color: var(--text-strong);
   line-height: 1.5;
   margin-bottom: 2.5rem;
 }
 
 .prose a {
-  color: #4d9fff;
+  color: var(--accent);
   text-decoration: underline;
 }
 
 .prose a:hover {
-  color: #79b8ff;
+  color: var(--accent-hover);
 }
 
 .prose hr {
   border: none;
-  border-top: 1px solid #333;
+  border-top: 1px solid var(--border);
   margin: 2rem 0;
 }
 
@@ -231,7 +324,7 @@ body {
   vertical-align: super;
   line-height: 0;
   cursor: pointer;
-  color: #4d9fff;
+  color: var(--accent);
 }
 
 .sidenote {
@@ -243,12 +336,12 @@ body {
   margin-bottom: 2rem;
   font-size: 0.8rem;
   line-height: 1.4;
-  color: #888;
+  color: var(--text-faint);
 }
 
 .sidenote-inline-number {
   font-weight: 600;
-  color: #aaa;
+  color: var(--text-dim);
   margin-right: 0.2rem;
 }
 
@@ -259,9 +352,9 @@ body {
     margin: 0.5rem 0;
     width: 100%;
     padding: 0.75rem;
-    background: #1a1a1a;
+    background: var(--bg-subtle);
     border-radius: 4px;
-    border-left: 2px solid #4d9fff;
+    border-left: 2px solid var(--accent);
   }
 
   .sidenote-toggle:checked + .sidenote {
@@ -275,9 +368,9 @@ body {
   clear: right;
   margin: 2rem 0;
   padding: 1.5rem;
-  border: 1px dashed #333;
+  border: 1px dashed var(--border);
   border-radius: 8px;
-  background: #111;
+  background: var(--bg-elevated);
   width: calc(100% + 200px);
   max-width: 90vw;
 }
@@ -308,10 +401,10 @@ body {
     left: 0;
     right: 0;
     z-index: 100;
-    background: #0a0a0aee;
+    background: var(--bg-translucent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--border);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
@@ -330,7 +423,7 @@ body {
     padding: 0.75rem 1rem;
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-strong);
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
@@ -358,18 +451,18 @@ body {
   }
 
   .mobile-nav-menu li {
-    border-top: 1px solid #1a1a1a;
+    border-top: 1px solid var(--border-subtle);
   }
 
   .mobile-nav-menu a {
     display: block;
     padding: 0.75rem 1rem;
-    color: #888;
+    color: var(--text-faint);
     text-decoration: none;
     font-size: 0.9rem;
   }
 
   .mobile-nav-menu a:active {
-    color: #fff;
+    color: var(--text-strong);
   }
 }

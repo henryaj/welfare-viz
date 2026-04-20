@@ -8,6 +8,12 @@ import './style.css';
 
 const app = document.getElementById('app');
 
+// Theme: honor localStorage, else prefers-color-scheme, else light
+const storedTheme = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+document.documentElement.dataset.theme = initialTheme;
+
 
 // Build TOC from h2 headings
 const tocItems = headings
@@ -32,6 +38,10 @@ app.innerHTML = `
     </nav>
     <article class="prose">${content}</article>
   </div>
+  <button class="theme-toggle" aria-label="Toggle theme">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
   <nav class="mobile-nav">
     <button class="mobile-nav-toggle">
       <span class="mobile-nav-section"></span>
@@ -126,4 +136,11 @@ mobileMenu.addEventListener('click', (e) => {
     mobileMenu.classList.remove('open');
     mobileToggle.classList.remove('open');
   }
+});
+
+// Theme toggle
+document.querySelector('.theme-toggle').addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('theme', next);
 });
