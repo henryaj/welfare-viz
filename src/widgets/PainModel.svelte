@@ -40,6 +40,8 @@
 </script>
 
 <div class="pain-model">
+  <h3 class="widget-title">{copy.title ?? 'Pain-weighting models'}</h3>
+  <div class="body">
   <div class="controls">
     <div class="modes">
       {#each orderedModes as wm}
@@ -100,10 +102,25 @@
       <p class="footnote" class:hidden={!(shared.weightingMode === 'rp-welfare' && weights.some(a => a.rpIsProxy))}>† Not directly studied by RP — using pig estimate as proxy</p>
     </div>
   </div>
+  </div>
 </div>
 
 <style>
   .pain-model {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .widget-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-strong);
+    margin: 0;
+  }
+
+  .body {
     display: flex;
     gap: 2rem;
   }
@@ -299,7 +316,7 @@
   }
 
   @media (max-width: 768px) {
-    .pain-model {
+    .body {
       flex-direction: column;
     }
 

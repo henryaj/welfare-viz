@@ -1,19 +1,69 @@
 // Farming data from Tomasik (2007, updated 2018) and USDA
 // See research.md section 2
 
+// `sufferingPerDay`, `deathDays`, `sentience` and `sufferingDaysPerKg` are from
+// Tomasik (2018). Shrimp aren't in Tomasik's table — values marked with
+// `PROVISIONAL` are rough estimates and need sourcing work.
+// Per-animal "how they live / how they die" bullets live in copy.md under the
+// {{widget:animal-lives}} block, keyed by `<animal-id>-life` / `<animal-id>-death`.
+// `icon` paths are minimal outline SVGs drawn to sit in a 24×24 viewBox, with
+// round caps and 1.5 stroke width to match the Heroicons look used elsewhere.
+const icons = {
+  chicken: 'M5 16c0-2.5 2-4.5 4.5-4.5h3c2.5 0 4.5 2 4.5 4.5v1H5zM10 11.5V9a2 2 0 1 1 4 0v2.5M13 7.5l1.5-1.5',
+  egg: 'M12 4c-3 0-5 4-5 8s2 8 5 8 5-4 5-8-2-8-5-8z',
+  pig: 'M5 13c0-4 3-6 7-6s7 2 7 6v1c0 3-3 5-7 5s-7-2-7-5zM17 12l-1-2M7 12l1-2M14.5 15h-5a1.5 1.5 0 0 0 0 3h5a1.5 1.5 0 0 0 0-3z',
+  cow: 'M5 13c0-4 3-6 7-6s7 2 7 6v1c0 3-3 5-7 5s-7-2-7-5zM17 8l2-3M7 8L5 5M14 15h-4a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2z',
+  milk: 'M8.5 6h7L17 9v10a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V9zM7 9h10M10 13h4',
+  fish: 'M3 12c2-4 6-6 10-6s6 2 8 4M3 12c2 4 6 6 10 6s6-2 8-4M21 12l-3-3v6zM17 11h.01',
+  shrimp: 'M5 10c3-3 8-3 12 0l-2 5c-4 2-9 1-11-3zM9 14l-1 3M12 14l-1 3M15 13l-1 3',
+};
+
 export const farmedAnimals = [
-  { id: 'dairy',   name: 'Dairy cow',      lifespanDays: 2190, edibleKg: 30000,  color: '#7f8c8d', painAnimalId: 'cow' },
-  { id: 'salmon',  name: 'Farmed salmon',  lifespanDays: 639,  edibleKg: 2.0,    color: '#e67e22', painAnimalId: 'salmon' },
-  { id: 'eggs',    name: 'Layer hen',      lifespanDays: 501,  edibleKg: 16,     color: '#f1c40f', painAnimalId: 'chicken' },
-  { id: 'beef',    name: 'Beef cow',       lifespanDays: 395,  edibleKg: 212,    color: '#c0392b', painAnimalId: 'cow' },
-  { id: 'pig',     name: 'Pig',            lifespanDays: 183,  edibleKg: 65,     color: '#e88e9e', painAnimalId: 'pig' },
-  { id: 'shrimp',  name: 'Farmed shrimp',  lifespanDays: 120,  edibleKg: 0.02,   color: '#d35400', painAnimalId: 'shrimp' },
-  { id: 'chicken', name: 'Broiler chicken', lifespanDays: 42,   edibleKg: 1.9,    color: '#f39c12', painAnimalId: 'chicken' },
+  {
+    id: 'dairy', name: 'Dairy cow', lifespanDays: 2190, edibleKg: 30000,
+    color: '#7f8c8d', painAnimalId: 'cow', icon: icons.milk,
+    sufferingPerDay: 2, deathDays: 15, sentience: 0.9, sufferingDaysPerKg: 0.11,
+  },
+  {
+    id: 'salmon', name: 'Farmed salmon', lifespanDays: 639, edibleKg: 2.0,
+    color: '#e67e22', painAnimalId: 'salmon', icon: icons.fish,
+    sufferingPerDay: 1.5, deathDays: 15, sentience: 0.25, sufferingDaysPerKg: 120,
+  },
+  {
+    id: 'eggs', name: 'Layer hen', lifespanDays: 501, edibleKg: 16,
+    color: '#f1c40f', painAnimalId: 'chicken', icon: icons.egg,
+    sufferingPerDay: 4, deathDays: 7.5, sentience: 0.5, sufferingDaysPerKg: 64,
+  },
+  {
+    id: 'beef', name: 'Beef cow', lifespanDays: 395, edibleKg: 212,
+    color: '#c0392b', painAnimalId: 'cow', icon: icons.cow,
+    sufferingPerDay: 1, deathDays: 30, sentience: 0.9, sufferingDaysPerKg: 1.8,
+  },
+  {
+    id: 'pig', name: 'Pig', lifespanDays: 183, edibleKg: 65,
+    color: '#e88e9e', painAnimalId: 'pig', icon: icons.pig,
+    sufferingPerDay: 2.5, deathDays: 12, sentience: 1, sufferingDaysPerKg: 7.5,
+  },
+  {
+    id: 'shrimp', name: 'Farmed shrimp', lifespanDays: 120, edibleKg: 0.02,
+    color: '#d35400', painAnimalId: 'shrimp', icon: icons.shrimp,
+    sufferingPerDay: null, deathDays: null, sentience: 0.03, sufferingDaysPerKg: null, // PROVISIONAL
+  },
+  {
+    id: 'chicken', name: 'Broiler chicken', lifespanDays: 42, edibleKg: 1.9,
+    color: '#f39c12', painAnimalId: 'chicken', icon: icons.chicken,
+    sufferingPerDay: 3, deathDays: 10, sentience: 0.5, sufferingDaysPerKg: 41,
+  },
 ];
 
 // Derived: life-days per kg of product
 export const lifeDaysPerKg = Object.fromEntries(
   farmedAnimals.map(a => [a.id, a.lifespanDays / a.edibleKg])
+);
+
+// Derived: Tomasik (2018) suffering-days per kg of product
+export const sufferingDaysPerKg = Object.fromEntries(
+  farmedAnimals.map(a => [a.id, a.sufferingDaysPerKg])
 );
 
 // Diet product definitions — maps product to the farmed animal it comes from

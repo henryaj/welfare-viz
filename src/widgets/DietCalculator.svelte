@@ -1,146 +1,171 @@
 <script>
-  // Mounted at {{widget:diet-calculator}} (Part 2, currently parked).
-  // Interactive diet builder: reader picks a preset (European, American, British,
-  // Pescatarian, Vegetarian, Vegan) or drags sliders per product, and sees the
-  // total life-days per year broken out as a stacked bar. Preset numbers live
-  // in src/data/farming.js and are provisional pending Part 2 sourcing work.
-  import { farmedAnimals, lifeDaysPerKg, products, presets, sliderMax } from '../data/farming.js';
+  // Mounted at {{widget:diet-calculator}}.
+  // Preset-driven diet comparison with two stacked bars (life-days vs.
+  // suffering-days) on a shared scale so the two framings can be read at once.
+  // Weighting maps (`lifeDaysPerKg` / `sufferingDaysPerKg`) live in farming.js.
+  import { fade } from 'svelte/transition';
+  import {
+    farmedAnimals, lifeDaysPerKg, sufferingDaysPerKg,
+    products, presets,
+  } from '../data/farming.js';
 
   let { copy = {} } = $props();
-  let diet = $state({ ...presets.european.values });
-  let activePreset = $state('european');
 
-  function applyPreset(key) {
-    diet = { ...presets[key].values };
-    activePreset = key;
+  let activePreset = $state('european');
+  let diet = $derived(presets[activePreset].values);
+
+  function buildBreakdown(weight) {
+    return products.map(p => {
+      const kg = p.toKg(diet[p.id]);
+      const perKg = weight[p.animalId] ?? 0;
+      const animal = farmedAnimals.find(a => a.id === p.animalId);
+      return {
+        id: p.id,
+        label: p.label,
+        days: kg * perKg,
+        color: animal.color,
+      };
+    });
   }
 
-  // Compute a fixed max scale from the largest preset (American)
-  const maxLifeDays = Math.max(
-    ...Object.values(presets).map(p =>
-      products.reduce((sum, prod) => {
-        const kg = prod.toKg(p.values[prod.id]);
-        return sum + kg * lifeDaysPerKg[prod.animalId];
-      }, 0)
+  let lifeBreakdown = $derived(buildBreakdown(lifeDaysPerKg));
+  let sufferingBreakdown = $derived(buildBreakdown(sufferingDaysPerKg));
+  let lifeTotal = $derived(lifeBreakdown.reduce((s, b) => s + b.days, 0));
+  let sufferingTotal = $derived(sufferingBreakdown.reduce((s, b) => s + b.days, 0));
+
+  // Fixed scale across both framings AND all presets so the two bars share an
+  // axis and switching presets doesn't rescale.
+  const maxDays = Math.max(
+    ...[lifeDaysPerKg, sufferingDaysPerKg].flatMap(weight =>
+      Object.values(presets).map(p =>
+        products.reduce((sum, prod) =>
+          sum + prod.toKg(p.values[prod.id]) * (weight[prod.animalId] ?? 0)
+        , 0)
+      )
     )
   );
 
-  let lifeDaysBreakdown = $derived(
-    products.map(p => {
-      const kg = p.toKg(diet[p.id]);
-      const days = kg * lifeDaysPerKg[p.animalId];
-      const animal = farmedAnimals.find(a => a.id === p.animalId);
-      return { id: p.id, label: p.label, days, color: animal.color };
-    })
+  // Legend: one entry per product eaten in the active preset (non-zero kg).
+  let activeProducts = $derived(
+    products
+      .filter(p => diet[p.id] > 0)
+      .map(p => ({
+        label: p.label,
+        color: farmedAnimals.find(a => a.id === p.animalId).color,
+      }))
   );
 
-  let totalLifeDays = $derived(lifeDaysBreakdown.reduce((sum, b) => sum + b.days, 0));
-
-  function onSliderInput() {
-    activePreset = null;
+  function formatVal(v) {
+    if (v >= 1000) return Math.round(v).toLocaleString();
+    if (v >= 10) return Math.round(v).toString();
+    if (v >= 1) return v.toFixed(1);
+    if (v >= 0.01) return v.toFixed(2);
+    if (v === 0) return '0';
+    return v.toFixed(3);
   }
 </script>
 
 <div class="diet-calculator">
-  <h3 class="chart-title">Life-days in different diets</h3>
+  <h3 class="widget-title">{copy.title ?? 'Your diet, in animal days'}</h3>
+
   {#if copy.intro}<p class="chart-copy">{copy.intro}</p>{/if}
 
-  <div class="diet-layout">
-    <div class="diet-inputs">
-      <div class="preset-buttons">
-        {#each Object.entries(presets) as [key, preset]}
-          <button
-            class="preset-btn"
-            class:active={activePreset === key}
-            onclick={() => applyPreset(key)}
-          >{preset.label}</button>
-        {/each}
-      </div>
+  <div class="preset-buttons">
+    {#each Object.entries(presets) as [key, preset]}
+      <button
+        class="preset-btn"
+        class:active={activePreset === key}
+        onclick={() => (activePreset = key)}
+      >{preset.label}</button>
+    {/each}
+  </div>
 
-      <div class="sliders">
-        {#each products as product}
-          <div class="slider-row">
-            <label class="slider-label" for="diet-slider-{product.id}">{product.label}</label>
-            <input
-              id="diet-slider-{product.id}"
-              type="range"
-              min="0"
-              max={sliderMax[product.id]}
-              bind:value={diet[product.id]}
-              oninput={onSliderInput}
-              class="slider"
-            />
-            <span class="slider-value">{diet[product.id]} <span class="slider-unit">{product.unit}</span></span>
-          </div>
-        {/each}
-      </div>
-    </div>
+  {#if copy[activePreset]}
+    {#key activePreset}
+      <div class="editorial" in:fade={{ duration: 200 }}>{copy[activePreset]}</div>
+    {/key}
+  {/if}
 
-    <div class="diet-output">
+  <div class="bars">
+    <div class="bar-row">
+      <div class="bar-header">
+        <span class="bar-label">Life-days</span>
+        <span class="bar-total">{formatVal(lifeTotal)}</span>
+      </div>
       <div class="stacked-bar">
-        {#each lifeDaysBreakdown as segment}
+        {#each lifeBreakdown as segment}
           <div
             class="stacked-segment"
-            style="width: {(segment.days / maxLifeDays) * 100}%; background: {segment.color}"
-            title="{segment.label}: {Math.round(segment.days).toLocaleString()} life-days"
+            style="width: {maxDays > 0 ? (segment.days / maxDays) * 100 : 0}%; background-color: {segment.color}"
+            title="{segment.label}: {formatVal(segment.days)} life-days"
           ></div>
         {/each}
       </div>
+    </div>
 
-      <div class="diet-legend">
-        {#each lifeDaysBreakdown as segment}
-          {#if segment.days > 0}
-            <div class="legend-item">
-              <span class="legend-swatch" style="background: {segment.color}"></span>
-              <span class="legend-label">{segment.label}</span>
-              <span class="legend-value">{Math.round(segment.days).toLocaleString()}</span>
-            </div>
-          {/if}
-        {/each}
+    <div class="bar-row">
+      <div class="bar-header">
+        <span class="bar-label">Suffering-days</span>
+        <span class="bar-total">{formatVal(sufferingTotal)}</span>
       </div>
-
-      <div class="total-life-days">
-        <span class="total-label">Total life-days per year</span>
-        <span class="total-value">{Math.round(totalLifeDays).toLocaleString()}</span>
+      <div class="stacked-bar">
+        {#each sufferingBreakdown as segment}
+          <div
+            class="stacked-segment"
+            style="width: {maxDays > 0 ? (segment.days / maxDays) * 100 : 0}%; background-color: {segment.color}"
+            title="{segment.label}: {formatVal(segment.days)} suffering-days"
+          ></div>
+        {/each}
+        <div
+          class="stripe-overlay"
+          style="width: {maxDays > 0 ? (sufferingTotal / maxDays) * 100 : 0}%"
+          aria-hidden="true"
+        ></div>
       </div>
     </div>
+  </div>
+
+  <div class="diet-legend">
+    {#each activeProducts as item}
+      <div class="legend-item">
+        <span class="legend-swatch" style="background: {item.color}"></span>
+        <span class="legend-label">{item.label}</span>
+      </div>
+    {/each}
   </div>
 </div>
 
 <style>
+  .diet-calculator {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .widget-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-strong);
+    margin: 0 0 0.5rem 0;
+  }
+
   .chart-copy {
     font-size: 0.85rem;
     color: var(--text-faint);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
     line-height: 1.5;
-  }
-
-  .chart-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--text-strong);
-    margin-bottom: 0.75rem;
-  }
-
-  .diet-layout {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .diet-inputs {
-    flex: 0 0 320px;
   }
 
   .preset-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.4rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .preset-btn {
-    flex: 1;
-    padding: 0.35rem 0.5rem;
+    flex: 1 1 auto;
+    padding: 0.4rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 4px;
     background: none;
@@ -161,53 +186,52 @@
     background: var(--accent-bg);
   }
 
-  .slider-row {
+  .editorial {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+    padding: 0.6rem 0.85rem;
+    margin-bottom: 1.25rem;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-bg-subtle);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .bars {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
   }
 
-  .slider-label {
-    flex: 0 0 65px;
-    font-size: 0.8rem;
+  .bar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.35rem;
+  }
+
+  .bar-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    text-align: right;
   }
 
-  .slider {
-    flex: 1;
-    height: 4px;
-    accent-color: var(--accent);
-    cursor: pointer;
-  }
-
-  .slider-value {
-    flex: 0 0 70px;
-    font-size: 0.8rem;
-    color: var(--text-faint);
+  .bar-total {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-strong);
     font-variant-numeric: tabular-nums;
   }
 
-  .slider-unit {
-    color: var(--text-ghost);
-  }
-
-  .diet-output {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
   .stacked-bar {
+    position: relative;
     display: flex;
-    height: 36px;
+    height: 44px;
     border-radius: 4px;
     overflow: hidden;
     background: var(--bg-subtle);
-    margin-bottom: 1rem;
   }
 
   .stacked-segment {
@@ -215,17 +239,32 @@
     flex-shrink: 0;
   }
 
+  /* One continuous stripe layer over all segments, so thickness stays even
+     instead of restarting inside each segment. */
+  .stripe-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    transition: width 0.4s ease;
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.22) 0 3px,
+      rgba(255, 255, 255, 0.06) 3px 7px
+    );
+  }
+
   .diet-legend {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1rem;
-    margin-bottom: 1rem;
+    gap: 0.75rem 1rem;
   }
 
   .legend-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.4rem;
     font-size: 0.75rem;
   }
 
@@ -238,47 +277,5 @@
 
   .legend-label {
     color: var(--text-dim);
-  }
-
-  .legend-value {
-    color: var(--text-faint);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .total-life-days {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-top: 1px solid var(--border);
-    padding-top: 0.75rem;
-  }
-
-  .total-label {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-  }
-
-  .total-value {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: var(--text-strong);
-  }
-
-  @media (max-width: 1024px) {
-    .diet-inputs {
-      flex: 0 0 260px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .diet-layout {
-      flex-direction: column;
-    }
-
-    .diet-inputs {
-      flex: none;
-    }
   }
 </style>

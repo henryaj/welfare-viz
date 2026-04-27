@@ -1,9 +1,9 @@
 import { mount } from 'svelte';
 import { html as content, headings, meta, widgetCopy } from 'virtual:content';
 import PainModel from './widgets/PainModel.svelte';
+import AnimalLives from './widgets/AnimalLives.svelte';
 import LifeDays from './widgets/LifeDays.svelte';
 import DietCalculator from './widgets/DietCalculator.svelte';
-import SufferingDays from './widgets/SufferingDays.svelte';
 import './style.css';
 
 const app = document.getElementById('app');
@@ -54,9 +54,9 @@ app.innerHTML = `
 // Mount widgets
 const widgets = {
   'widget-pain-model': PainModel,
+  'widget-animal-lives': AnimalLives,
   'widget-life-days': LifeDays,
   'widget-diet-calculator': DietCalculator,
-  'widget-suffering-days': SufferingDays,
 };
 
 for (const [id, Component] of Object.entries(widgets)) {

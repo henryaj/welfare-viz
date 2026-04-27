@@ -71,10 +71,45 @@ function contentPlugin() {
 
     const processed = body.replace(widgetPattern, (_match, id, copyBlock) => {
       if (copyBlock) {
+        // Widget copy supports three value shapes:
+        //   key: value            → string
+        //   key:                  → followed by "  - bullet" lines → string[]
+        //   key:                  → followed by indented prose lines → string (joined with spaces)
+        // Keys live at one indent level; continuation lines must be indented deeper.
         const copy = {};
-        for (const line of copyBlock.trim().split('\n')) {
-          const i = line.indexOf(':');
-          if (i !== -1) copy[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+        let keyIndent = null;
+        let currentKey = null;
+        for (const raw of copyBlock.split('\n')) {
+          const line = raw.replace(/\s+$/, '');
+          if (!line.trim()) { currentKey = null; continue; }
+          const indent = line.match(/^\s*/)[0].length;
+          const keyMatch = line.match(/^\s*([a-zA-Z][\w-]*):\s*(.*)$/);
+
+          if (keyIndent === null && keyMatch) {
+            keyIndent = indent;
+          }
+
+          if (keyMatch && indent === keyIndent) {
+            const [, key, val] = keyMatch;
+            copy[key] = val.trim();
+            currentKey = key;
+            continue;
+          }
+
+          if (currentKey && indent > (keyIndent ?? 0)) {
+            const content = line.slice(indent);
+            const bullet = content.match(/^-\s+(.*)$/);
+            if (bullet) {
+              if (!Array.isArray(copy[currentKey])) {
+                copy[currentKey] = copy[currentKey] ? [copy[currentKey]] : [];
+              }
+              copy[currentKey].push(bullet[1].trim());
+            } else if (!Array.isArray(copy[currentKey])) {
+              copy[currentKey] = copy[currentKey]
+                ? copy[currentKey] + ' ' + content.trim()
+                : content.trim();
+            }
+          }
         }
         widgetCopy[id] = copy;
       }

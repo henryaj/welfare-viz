@@ -82,8 +82,9 @@
 </script>
 
 <div class="life-days-widget" bind:this={container} use:observe>
+  <h3 class="widget-title">{copy.title ?? 'Life-days per kg of product'}</h3>
   <div class="header">
-    <h3 class="chart-title">{charts[active].title}</h3>
+    <h4 class="chart-title">{charts[active].title}</h4>
     <div class="nav">
       <button class="nav-btn" aria-label="Previous" onclick={() => go(active - 1)}>‹</button>
       <div class="dots">
@@ -130,6 +131,14 @@
   .life-days-widget {
     display: flex;
     flex-direction: column;
+  }
+
+  .widget-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-strong);
+    margin: 0 0 0.75rem 0;
   }
 
   .header {
