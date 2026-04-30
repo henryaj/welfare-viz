@@ -215,14 +215,14 @@ slaughter event is.
 
 These are relatively simple models — they account for how many animals get
 eaten in a given diet, how many days of each animal's life that corresponds
-to, and how much those animals likely suffer.
+to, and how much those animals likely suffer. The answers depend on which
+weighting you trust, and reasonable people will land in different places.
 
-There is a lot of uncertainty in these numbers. We haven't considered shrimp
-(increasingly thought to feel pain), the wild fish caught and fed to farmed
-fish, or the difference between how factory farmed, free range and
-pasture-raised animals are treated.
+There is a lot we haven't quantified: the wild fish that get fed to farmed salmon, male chicks which are killed at layer hatcheries, the difference between factory-farmed, free range, and pasture-raised animals, and the thorny question of whether shrimp even feel pain. It's worth noting that most of these would push the numbers in the worse direction, so the numbers above are somewhat conservative estimates.
 
-{{break}}
+Directionally, chicken, eggs and fish make up the bulk of the welfare impact of people's diets. Beef and dairy make up a much smaller proportion. So switching out chicken, fish and eggs (in decreasing order) will have the biggest impact on one's diet.
+
+Eating is very personal and has great cultural significance. None of the above is intended to be proscriptive. But hopefully it's given some insight into an otherwise unintuitive -- but enormously important -- subject.
 
 <aside class="cta">
 
@@ -235,6 +235,7 @@ think about where you could cut back.
 
 </aside>
 
+{{break}}
 
 # Sources and methodology
 
