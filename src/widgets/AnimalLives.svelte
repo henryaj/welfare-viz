@@ -22,18 +22,18 @@
     { id: 'compare' },
   ];
 
+  const maxSufferingDaysPerKg = Math.max(...animals.map(a => a.sufferingDaysPerKg ?? 0));
+  // Highest-suffering first — drives both the picker order and the compare bars.
+  const animalsBySuffering = [...animals].sort(
+    (a, b) => (b.sufferingDaysPerKg ?? -1) - (a.sufferingDaysPerKg ?? -1)
+  );
+
   let activePanel = $state(0);
-  let activeId = $state(animals[0].id);
+  let activeId = $state(animalsBySuffering[0].id);
   let detailsOpen = $state(false);
   let active = $derived(animals.find(a => a.id === activeId));
   let lifeContent = $derived(copy[`${activeId}-life`]);
   let deathContent = $derived(copy[`${activeId}-death`]);
-
-  const maxSufferingDaysPerKg = Math.max(...animals.map(a => a.sufferingDaysPerKg ?? 0));
-  // For the compare panel we want highest-first so bars form a clean staircase.
-  const animalsBySuffering = [...animals].sort(
-    (a, b) => (b.sufferingDaysPerKg ?? -1) - (a.sufferingDaysPerKg ?? -1)
-  );
 
   function fmt(n) {
     if (n == null) return '—';
@@ -49,23 +49,7 @@
 </script>
 
 <div class="animal-lives">
-  <div class="header">
-    <h3 class="widget-title">{copy.title ?? 'Comparing animal lives'}</h3>
-    <div class="nav">
-      <button class="nav-btn" aria-label="Previous" onclick={() => go(activePanel - 1)}>‹</button>
-      <div class="dots">
-        {#each panels as _, i}
-          <button
-            class="dot"
-            class:active={i === activePanel}
-            aria-label={`Panel ${i + 1}`}
-            onclick={() => go(i)}
-          ></button>
-        {/each}
-      </div>
-      <button class="nav-btn" aria-label="Next" onclick={() => go(activePanel + 1)}>›</button>
-    </div>
-  </div>
+  <h3 class="widget-title">{copy.title ?? 'Comparing animal lives'}</h3>
 
   {#if copy.intro}
     <p class="intro">{copy.intro}</p>
@@ -75,7 +59,7 @@
     <div class="panel" in:fade={{ duration: 200 }}>
       {#if panels[activePanel].id === 'detail'}
         <div class="picker" role="tablist">
-          {#each animals as a}
+          {#each animalsBySuffering as a}
             <button
               class="pick"
               class:active={a.id === activeId}
@@ -109,6 +93,16 @@
               </span>
             </div>
 
+            <button
+              class="disclosure"
+              type="button"
+              aria-expanded={detailsOpen}
+              onclick={() => (detailsOpen = !detailsOpen)}
+            >
+              <span class="disclosure-tri" aria-hidden="true">▸</span>
+              {detailsOpen ? 'Hide how they live and die' : 'How they live and die'}
+            </button>
+
             {#if detailsOpen}
               <div class="prose-sections" transition:slide={{ duration: 280 }}>
                 <div class="section">
@@ -139,15 +133,13 @@
               </div>
             {/if}
 
-            <button
-              class="disclosure"
-              type="button"
-              aria-expanded={detailsOpen}
-              onclick={() => (detailsOpen = !detailsOpen)}
-            >
-              <span class="disclosure-tri" aria-hidden="true">▸</span>
-              {detailsOpen ? 'Hide how they live and die' : 'How they live and die'}
-            </button>
+            <p class="source-note">
+              {#if activeId === 'shrimp'}
+                Author's own estimates.
+              {:else}
+                These numbers are rough estimates adapted from Brian Tomasik's work.
+              {/if}
+            </p>
           </div>
         {/key}
       {:else}
@@ -175,6 +167,21 @@
       {/if}
     </div>
   {/key}
+
+  <div class="nav">
+    <button class="nav-btn" aria-label="Previous" onclick={() => go(activePanel - 1)}>‹</button>
+    <div class="dots">
+      {#each panels as _, i}
+        <button
+          class="dot"
+          class:active={i === activePanel}
+          aria-label={`Panel ${i + 1}`}
+          onclick={() => go(i)}
+        ></button>
+      {/each}
+    </div>
+    <button class="nav-btn" aria-label="Next" onclick={() => go(activePanel + 1)}>›</button>
+  </div>
 </div>
 
 <style>
@@ -182,13 +189,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
   }
 
   .widget-title {
@@ -202,7 +202,9 @@
   .nav {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
   }
 
   .nav-btn {
@@ -501,8 +503,9 @@
     border: none;
     padding: 0.35rem 0;
     margin-top: 0.25rem;
-    font: inherit;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 0.8rem;
+    font-weight: 500;
     color: var(--text-dim);
     cursor: pointer;
     display: inline-flex;
@@ -521,6 +524,14 @@
 
   .disclosure[aria-expanded="true"] .disclosure-tri {
     transform: rotate(90deg);
+  }
+
+  .source-note {
+    margin: 0.4rem 0 0;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    color: var(--text-faint);
+    font-style: italic;
   }
 
   /* --- Compare panel (vertical bar chart) --- */

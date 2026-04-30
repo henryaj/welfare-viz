@@ -85,20 +85,6 @@
   <h3 class="widget-title">{copy.title ?? 'Life-days per kg of product'}</h3>
   <div class="header">
     <h4 class="chart-title">{charts[active].title}</h4>
-    <div class="nav">
-      <button class="nav-btn" aria-label="Previous" onclick={() => go(active - 1)}>‹</button>
-      <div class="dots">
-        {#each charts as _, i}
-          <button
-            class="dot"
-            class:active={i === active}
-            aria-label={`Chart ${i + 1}`}
-            onclick={() => go(i)}
-          ></button>
-        {/each}
-      </div>
-      <button class="nav-btn" aria-label="Next" onclick={() => go(active + 1)}>›</button>
-    </div>
   </div>
 
   {#key active}
@@ -125,6 +111,21 @@
       {/each}
     </div>
   {/key}
+
+  <div class="nav">
+    <button class="nav-btn" aria-label="Previous" onclick={() => go(active - 1)}>‹</button>
+    <div class="dots">
+      {#each charts as _, i}
+        <button
+          class="dot"
+          class:active={i === active}
+          aria-label={`Chart ${i + 1}`}
+          onclick={() => go(i)}
+        ></button>
+      {/each}
+    </div>
+    <button class="nav-btn" aria-label="Next" onclick={() => go(active + 1)}>›</button>
+  </div>
 </div>
 
 <style>
@@ -160,7 +161,9 @@
   .nav {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
   }
 
   .nav-btn {

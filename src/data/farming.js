@@ -2,8 +2,11 @@
 // See research.md section 2
 
 // `sufferingPerDay`, `deathDays`, `sentience` and `sufferingDaysPerKg` are from
-// Tomasik (2018). Shrimp aren't in Tomasik's table — values marked with
-// `PROVISIONAL` are rough estimates and need sourcing work.
+// Tomasik (2018). Shrimp aren't in his table — values are extrapolated using
+// the same formula `(lifespanDays * sufferingPerDay + deathDays) * sentience /
+// edibleKg`, with intensity benchmarked against broiler chickens (eyestalk
+// ablation, ammonia, hypoxia) and slow ice-slurry slaughter. Sentience kept at
+// 0.03 (Tomasik-conservative); per-kg is high because ~50 shrimp make a kg.
 // Per-animal "how they live / how they die" bullets live in copy.md under the
 // {{widget:animal-lives}} block, keyed by `<animal-id>-life` / `<animal-id>-death`.
 // `icon` paths are minimal outline SVGs drawn to sit in a 24×24 viewBox, with
@@ -47,7 +50,7 @@ export const farmedAnimals = [
   {
     id: 'shrimp', name: 'Farmed shrimp', lifespanDays: 120, edibleKg: 0.02,
     color: '#d35400', painAnimalId: 'shrimp', icon: icons.shrimp,
-    sufferingPerDay: null, deathDays: null, sentience: 0.03, sufferingDaysPerKg: null, // PROVISIONAL
+    sufferingPerDay: 2.5, deathDays: 15, sentience: 0.03, sufferingDaysPerKg: 470,
   },
   {
     id: 'chicken', name: 'Broiler chicken', lifespanDays: 42, edibleKg: 1.9,
