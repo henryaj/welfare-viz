@@ -196,7 +196,7 @@ animals).
 
 Eating a different diet means eating different animals. Combining the per-kg
 weighting above with what people actually eat across the year shows which
-products dominate the total — and which levers matter most if you're trying
+products dominate the totals and which levers matter most if you're trying
 to reduce your impact.
 
 The two bars below show the same diet under two framings: raw **life-days**
@@ -218,11 +218,25 @@ eaten in a given diet, how many days of each animal's life that corresponds
 to, and how much those animals likely suffer. The answers depend on which
 weighting you trust, and reasonable people will land in different places.
 
-There is a lot we haven't quantified: the wild fish that get fed to farmed salmon, male chicks which are killed at layer hatcheries, the difference between factory-farmed, free range, and pasture-raised animals, and the thorny question of whether shrimp even feel pain. It's worth noting that most of these would push the numbers in the worse direction, so the numbers above are somewhat conservative estimates.
+There is a lot we haven't quantified: the wild fish that get fed to farmed
+salmon, male chicks which are killed at layer hatcheries, the difference
+between factory-farmed, free range, and pasture-raised animals, and the thorny
+question of whether shrimp even feel pain. It's worth noting that most of these
+would push the numbers in the direction of _more_ suffering, not less, so the
+numbers above are somewhat conservative estimates.
 
-Directionally, chicken, eggs and fish make up the bulk of the welfare impact of people's diets. Beef and dairy make up a much smaller proportion. So switching out chicken, fish and eggs (in decreasing order) will have the biggest impact on one's diet.
+Directionally, chicken, eggs and fish make up the bulk of the welfare impact of
+people's diets. Beef and dairy make up a much smaller proportion. Switching out
+chicken, fish and eggs (in decreasing order) will have the biggest impact on
+one's diet. Many people switch out beef for chicken for various reasons,
+including to reduce the climate impact of their diet. But counterintuitively,
+this is actually one of the worst moves to make in terms of animal welfare.
 
-Eating is very personal and has great cultural significance. None of the above is intended to be proscriptive. But hopefully it's given some insight into an otherwise unintuitive -- but enormously important -- subject.
+Eating is very personal and has great cultural significance. A Christmas or
+Thanksgiving turkey, a Sunday roast, or even a cheese toastie all have strong
+emotional salience for lots of people. None of the above is intended to be
+proscriptive. But hopefully it's given some insight into an otherwise
+unintuitive -- but enormously important -- subject.
 
 <aside class="cta">
 
