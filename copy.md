@@ -204,22 +204,13 @@ The two bars below show the same diet under two framings: raw **life-days**
 which bakes in how intensely each species likely suffers and how bad the
 slaughter event is.
 
-<!-- TODO(henry): rewrite surrounding prose — the old "cut fish and eggs
-     first" / "life-days dominated by fish" framing lives elsewhere in this
-     doc and needs to be reconciled with the new toggle now that the reader
-     can switch modes themselves. Also note: diet-composition numbers are
-     provisional (see Sources section for the UK FAO / EUMOFA TODOs).
-
-     This might also be very wrong - e.g. tomasik talks about farmed salmon but
-     below we talk about fish -->
-
 {{widget:diet-calculator
-  intro: Different diets translate to very different totals. Brits and Europeans consume more fish than Americans; vegetarians and vegans cut out most of the impact regardless of which weighting you pick.
-  european: Fish account for the most life-days in European diets, 
-  american: Americans eat more chickens and fish, with chickens the largest source of suffering.
-  uk: Brits are similar to Europeans, but score slightly better due to eating less fish.
-  vegetarian: Vegetarian diets cause drastically less suffering than diets which include meat or fish.
-  vegan: Vegan diets cut out most animal suffering, although crop farming inevitably causes some small mammals to be killed (as with all diets).
+  intro: Different diets translate into very different numbers. Pick a diet to see its totals, and use "Compare to" if you want to see two diets side by side.
+  european: Fish consumption dominates the number of life-days in their diets -- 90% coming from fish alone. 
+  american: Americans consume less fish than Europeans, but much more chicken -- 46kg per person per year. This makes chicken the single biggest source of suffering.
+  uk: Brits eat slightly less fish than on the continent, and slightly less chicken than Americans.
+  vegetarian: Vegetarians don't eat meat or fish, cutting out much of the suffering in their diets. But 300 eggs a year still produces over a thousand days of suffering. Replacing beef with eggs is probably bad on net from a welfare perspective, which isn't totally intuitive.
+  vegan: Vegans don't consume animal products, so their numbers here are zero by definition. Like all diets, crop farming still has indirect impacts on animals (rodents, insects, displaced wildlife) that aren't modelled here.
 }}
 
 These are relatively simple models — they account for how many animals get
@@ -228,20 +219,21 @@ to, and how much those animals likely suffer.
 
 There is a lot of uncertainty in these numbers. We haven't considered shrimp
 (increasingly thought to feel pain), the wild fish caught and fed to farmed
-fish, or the difference between factory and pasture-raised animals.
-
-<!-- TODO(henry): expand the "things not modelled" list — wild fish used as
-     feed, shrimp, insects, welfare differences between factory and
-     pasture-raised animals. -->
+fish, or the difference between how factory farmed, free range and
+pasture-raised animals are treated.
 
 {{break}}
 
-*If the idea that animals' experiences might differ this much already changes
+<aside class="cta">
+
+If the idea that animals' experiences might differ this much already changes
 how you think, consider [donating to effective
 organisations](https://animalcharityevaluators.org/) which seek to reform the
 way we raise animals for food, [pay for
 'offsets'](https://www.farmkind.giving/) to cover the animals you consume, or
-think about where you could cut back.*
+think about where you could cut back.
+
+</aside>
 
 
 # Sources and methodology
@@ -270,7 +262,7 @@ weighs 55g).
 counts in particular carry factor-of-two uncertainty because FAO publishes
 landings only in tonnes, and converting to kg-per-person relies on species-mix
 assumptions (mean fish weight varies by approx. 1,000× across the species a
-Westerner eats -- from 10 g sardines to 50 kg tuna).
+Westerner eats -- from 10 g sardines to 50 kg tuna). Numbers here are tentative.
 
 - *American*: beef 26 kg, pork 23 kg, chicken 46 kg, fish 9 kg, eggs 264,
   milk 297 kg. From [USDA ERS Food Availability data](https://www.ers.usda.gov/data-products/food-availability-per-capita-data-system/)

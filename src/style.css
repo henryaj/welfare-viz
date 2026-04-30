@@ -403,6 +403,29 @@ body {
   height: 5rem;
 }
 
+/* Yellow callout used for the closing donation/action paragraph. */
+.prose .cta {
+  margin: 2rem 0;
+  padding: 1.1rem 1.4rem;
+  background: #fff7d6;
+  border-left: 4px solid #f1c40f;
+  border-radius: 4px;
+  color: var(--text);
+}
+
+.prose .cta p {
+  margin: 0;
+}
+
+.prose .cta p + p {
+  margin-top: 0.6rem;
+}
+
+:root[data-theme="dark"] .prose .cta {
+  background: rgba(241, 196, 15, 0.09);
+  border-left-color: #e0b412;
+}
+
 /* --- Tufte-style sidenotes --- */
 
 .sidenote-toggle {

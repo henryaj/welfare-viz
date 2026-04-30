@@ -100,7 +100,7 @@
               onclick={() => (detailsOpen = !detailsOpen)}
             >
               <span class="disclosure-tri" aria-hidden="true">▸</span>
-              {detailsOpen ? 'Hide how they live and die' : 'How they live and die'}
+              How they live and die
             </button>
 
             {#if detailsOpen}
