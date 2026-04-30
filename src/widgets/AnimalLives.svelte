@@ -6,7 +6,7 @@
   //   2. Suffering-days per kg plotted across all animals, so you can eyeball
   //      the comparison.
   import { farmedAnimals } from '../data/farming.js';
-  import { fade } from 'svelte/transition';
+  import { fade, slide } from 'svelte/transition';
 
   let { copy = {} } = $props();
 
@@ -24,6 +24,7 @@
 
   let activePanel = $state(0);
   let activeId = $state(animals[0].id);
+  let detailsOpen = $state(false);
   let active = $derived(animals.find(a => a.id === activeId));
   let lifeContent = $derived(copy[`${activeId}-life`]);
   let deathContent = $derived(copy[`${activeId}-death`]);
@@ -90,51 +91,63 @@
 
         {#key activeId}
           <div class="detail" in:fade={{ duration: 180 }}>
-            <div class="section">
-              <div class="section-body">
-                <h4 class="section-title">How they live</h4>
-                {#if Array.isArray(lifeContent) && lifeContent.length}
-                  <ul class="desc">
-                    {#each lifeContent as pt}<li>{pt}</li>{/each}
-                  </ul>
-                {:else if typeof lifeContent === 'string' && lifeContent}
-                  <p class="desc">{lifeContent}</p>
-                {:else}
-                  <p class="desc placeholder">Add <code>{active.id}-life</code> to the widget copy in <code>copy.md</code>.</p>
-                {/if}
-              </div>
+            <div class="stat-row">
               <span class="stat" title="Suffering intensity per day of life, on a scale where beef cattle = 1">
                 <span class="stat-value">{fmt(active.sufferingPerDay)}×</span>
                 <span class="stat-label">suffering/day<br/>(beef = 1)</span>
               </span>
-            </div>
-
-            <div class="section">
-              <div class="section-body">
-                <h4 class="section-title">How they die</h4>
-                {#if Array.isArray(deathContent) && deathContent.length}
-                  <ul class="desc">
-                    {#each deathContent as pt}<li>{pt}</li>{/each}
-                  </ul>
-                {:else if typeof deathContent === 'string' && deathContent}
-                  <p class="desc">{deathContent}</p>
-                {:else}
-                  <p class="desc placeholder">Add <code>{active.id}-death</code> to the widget copy in <code>copy.md</code>.</p>
-                {/if}
-              </div>
               <span class="stat" title="Pain of the slaughter event, expressed as equivalent days of normal farm life">
                 <span class="stat-value">{fmt(active.deathDays)}</span>
                 <span class="stat-label">days of life<br/>≡ pain of death</span>
               </span>
-            </div>
-
-            <div class="summary">
-              <span class="summary-label">Suffering per kg of product</span>
-              <span class="summary-value">
-                <strong>{fmt(active.sufferingDaysPerKg)}</strong>
-                <span class="summary-unit">suffering-days / kg</span>
+              <span class="summary summary--inline">
+                <span class="summary-label">Suffering per kg</span>
+                <span class="summary-value">
+                  <strong>{fmt(active.sufferingDaysPerKg)}</strong>
+                  <span class="summary-unit">suffering-days / kg</span>
+                </span>
               </span>
             </div>
+
+            {#if detailsOpen}
+              <div class="prose-sections" transition:slide={{ duration: 280 }}>
+                <div class="section">
+                  <h4 class="section-title">How they live</h4>
+                  {#if Array.isArray(lifeContent) && lifeContent.length}
+                    <ul class="desc">
+                      {#each lifeContent as pt}<li>{pt}</li>{/each}
+                    </ul>
+                  {:else if typeof lifeContent === 'string' && lifeContent}
+                    <p class="desc">{lifeContent}</p>
+                  {:else}
+                    <p class="desc placeholder">Add <code>{active.id}-life</code> to the widget copy in <code>copy.md</code>.</p>
+                  {/if}
+                </div>
+
+                <div class="section">
+                  <h4 class="section-title">How they die</h4>
+                  {#if Array.isArray(deathContent) && deathContent.length}
+                    <ul class="desc">
+                      {#each deathContent as pt}<li>{pt}</li>{/each}
+                    </ul>
+                  {:else if typeof deathContent === 'string' && deathContent}
+                    <p class="desc">{deathContent}</p>
+                  {:else}
+                    <p class="desc placeholder">Add <code>{active.id}-death</code> to the widget copy in <code>copy.md</code>.</p>
+                  {/if}
+                </div>
+              </div>
+            {/if}
+
+            <button
+              class="disclosure"
+              type="button"
+              aria-expanded={detailsOpen}
+              onclick={() => (detailsOpen = !detailsOpen)}
+            >
+              <span class="disclosure-tri" aria-hidden="true">▸</span>
+              {detailsOpen ? 'Hide how they live and die' : 'How they live and die'}
+            </button>
           </div>
         {/key}
       {:else}
@@ -299,15 +312,14 @@
     gap: 0.85rem;
   }
 
-  .section {
+  .prose-sections {
     display: flex;
-    align-items: stretch;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.85rem;
+    overflow: hidden;
   }
 
-  .section-body {
-    flex: 1;
-    min-width: 0;
+  .section {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
@@ -427,6 +439,90 @@
     margin-left: 0.4rem;
   }
 
+  /* --- Collapsed stat row (default state) --- */
+
+  .stat-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+
+  .stat-row .stat {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .stat-row .summary--inline {
+    flex: 1.5 1 0;
+    min-width: 0;
+  }
+
+  .summary--inline {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.6rem 0.95rem;
+    margin-top: 0;
+    background: var(--accent-bg);
+    border-color: var(--accent);
+    border-width: 1px;
+    box-shadow: 0 0 0 1px var(--accent) inset;
+  }
+
+  .summary--inline .summary-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .summary--inline .summary-value {
+    align-items: baseline;
+  }
+
+  .summary--inline .summary-value strong {
+    font-size: 1.65rem;
+    line-height: 1;
+    color: var(--text-strong);
+  }
+
+  .summary--inline .summary-unit {
+    font-size: 0.65rem;
+    margin-left: 0.15rem;
+    color: var(--text-faint);
+  }
+
+  .disclosure {
+    align-self: flex-start;
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0;
+    margin-top: 0.25rem;
+    font: inherit;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .disclosure:hover {
+    color: var(--text-strong);
+  }
+
+  .disclosure-tri {
+    display: inline-block;
+    transition: transform 0.18s ease;
+  }
+
+  .disclosure[aria-expanded="true"] .disclosure-tri {
+    transform: rotate(90deg);
+  }
+
   /* --- Compare panel (vertical bar chart) --- */
 
   .chart {
@@ -512,23 +608,13 @@
   }
 
   @media (max-width: 640px) {
-    .section {
-      flex-direction: column;
-    }
-
     .stat {
-      align-self: flex-start;
-      flex-direction: row;
       min-width: 0;
       padding: 0.4rem 0.7rem;
     }
 
     .stat-value {
       font-size: 1rem;
-    }
-
-    .stat-label {
-      text-align: left;
     }
 
     .summary {
@@ -539,6 +625,17 @@
 
     .bar-label {
       flex: 0 0 85px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stat-row {
+      gap: 0.4rem;
+    }
+
+    .stat-row .stat-value,
+    .stat-row .summary-value strong {
+      font-size: 1rem;
     }
   }
 </style>

@@ -63,6 +63,30 @@
     if (v === 0) return '0';
     return v.toFixed(3);
   }
+
+  let barsEl;
+  let tooltip = $state(null);
+
+  function showTip(e, segment, unit) {
+    if (!segment.days || !barsEl) return;
+    const r = barsEl.getBoundingClientRect();
+    tooltip = {
+      x: e.clientX - r.left,
+      y: e.clientY - r.top,
+      label: segment.label,
+      value: segment.days,
+      unit,
+    };
+  }
+
+  function hideTip() {
+    tooltip = null;
+  }
+
+  $effect(() => {
+    activePreset;
+    tooltip = null;
+  });
 </script>
 
 <div class="diet-calculator">
@@ -86,7 +110,7 @@
     {/key}
   {/if}
 
-  <div class="bars">
+  <div class="bars" bind:this={barsEl}>
     <div class="bar-row">
       <div class="bar-header">
         <span class="bar-label">Life-days</span>
@@ -97,7 +121,11 @@
           <div
             class="stacked-segment"
             style="width: {maxDays > 0 ? (segment.days / maxDays) * 100 : 0}%; background-color: {segment.color}"
-            title="{segment.label}: {formatVal(segment.days)} life-days"
+            role="img"
+            aria-label="{segment.label}: {formatVal(segment.days)} life-days"
+            onmouseenter={(e) => showTip(e, segment, 'life-days')}
+            onmousemove={(e) => showTip(e, segment, 'life-days')}
+            onmouseleave={hideTip}
           ></div>
         {/each}
       </div>
@@ -113,7 +141,11 @@
           <div
             class="stacked-segment"
             style="width: {maxDays > 0 ? (segment.days / maxDays) * 100 : 0}%; background-color: {segment.color}"
-            title="{segment.label}: {formatVal(segment.days)} suffering-days"
+            role="img"
+            aria-label="{segment.label}: {formatVal(segment.days)} suffering-days"
+            onmouseenter={(e) => showTip(e, segment, 'suffering-days')}
+            onmousemove={(e) => showTip(e, segment, 'suffering-days')}
+            onmouseleave={hideTip}
           ></div>
         {/each}
         <div
@@ -123,6 +155,17 @@
         ></div>
       </div>
     </div>
+
+    {#if tooltip}
+      <div
+        class="bar-tooltip"
+        style="left: {tooltip.x}px; top: {tooltip.y}px"
+        role="tooltip"
+      >
+        <span class="tip-label">{tooltip.label}</span>
+        <span class="tip-value">{formatVal(tooltip.value)} {tooltip.unit}</span>
+      </div>
+    {/if}
   </div>
 
   <div class="diet-legend">
@@ -198,10 +241,57 @@
   }
 
   .bars {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.9rem;
     margin-bottom: 1rem;
+  }
+
+  .stacked-segment {
+    cursor: default;
+  }
+
+  .bar-tooltip {
+    position: absolute;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% - 12px));
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.4rem 0.6rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .bar-tooltip::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 8px;
+    height: 8px;
+    background: var(--bg-elevated);
+    border-right: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .tip-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-strong);
+  }
+
+  .tip-value {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
   }
 
   .bar-header {

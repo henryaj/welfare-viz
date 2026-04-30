@@ -135,6 +135,13 @@ function contentPlugin() {
     // Convert bottom-of-page footnotes into inline Tufte-style sidenotes
     html = convertFootnotesToSidenotes(html);
 
+    // Pull the first paragraph out as the lede so the hero can render it.
+    const ledeMatch = html.match(/<p>([\s\S]*?)<\/p>/);
+    if (ledeMatch) {
+      meta.lede = ledeMatch[1];
+      html = html.replace(ledeMatch[0], '').replace(/^\s+/, '');
+    }
+
     return { html, headings, meta, widgetCopy };
   }
 

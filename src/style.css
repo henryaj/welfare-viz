@@ -79,16 +79,17 @@ body {
 
 .hero {
   position: relative;
-  min-height: 45vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
 .hero-gradient {
   position: absolute;
-  inset: 0;
+  inset: -10% 0;
   background: linear-gradient(
     135deg,
     #0a0a0a 0%,
@@ -100,6 +101,7 @@ body {
   );
   background-size: 400% 400%;
   animation: gradient-shift 12s ease infinite;
+  will-change: transform;
 }
 
 @keyframes gradient-shift {
@@ -113,21 +115,109 @@ body {
   z-index: 1;
   max-width: 960px;
   width: 100%;
-  padding: 4rem 1rem 3rem calc(200px + 2rem);
+  padding: 2rem 1rem 2rem calc(200px + 2rem);
 }
 
 .hero-content h1 {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: 2.8rem;
-  line-height: 1.15;
+  font-size: 3.2rem;
+  line-height: 1.1;
   color: #fff;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-lede {
+  max-width: 36em;
+  margin: 0 0 1.75rem 0;
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .hero-author {
   color: #ccc;
   font-size: 1rem;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  z-index: 1;
+  width: 28px;
+  height: 44px;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 6px;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.hero-scroll-chevron {
+  display: block;
+  width: 3px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+  animation: hero-scroll-pulse 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes hero-scroll-pulse {
+  0% { opacity: 0; transform: translateY(-4px); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(14px); }
+}
+
+/* Scroll-driven parallax + fade — Chromium/Safari TP. Firefox falls back. */
+@supports (animation-timeline: view()) {
+  .hero-gradient {
+    animation:
+      gradient-shift 12s ease infinite,
+      hero-parallax linear;
+    animation-timeline: auto, view();
+    animation-range: normal, cover 0% cover 100%;
+  }
+
+  @keyframes hero-parallax {
+    from { transform: translateY(-8%); }
+    to   { transform: translateY(8%); }
+  }
+
+  .hero-content {
+    animation: hero-content-out linear;
+    animation-timeline: view();
+    animation-range: exit 0% exit 80%;
+  }
+
+  @keyframes hero-content-out {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-50px); }
+  }
+
+  .hero-scroll {
+    animation: hero-scroll-fade linear;
+    animation-timeline: scroll();
+    animation-range: 0 25vh;
+  }
+
+  @keyframes hero-scroll-fade {
+    from { opacity: 1; transform: translate(-50%, 0); }
+    to   { opacity: 0; transform: translate(-50%, 12px); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient { animation: none; }
+  .hero-scroll-chevron { animation: none; }
+  @supports (animation-timeline: view()) {
+    .hero-gradient,
+    .hero-content,
+    .hero-scroll { animation: none; }
+  }
 }
 
 /* --- Theme toggle --- */

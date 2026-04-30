@@ -26,9 +26,13 @@ app.innerHTML = `
     <div class="hero-gradient"></div>
     <div class="hero-content">
       <h1>${meta.title}</h1>
+      ${meta.lede ? `<p class="hero-lede">${meta.lede}</p>` : ''}
       <div class="hero-meta">
         <a class="hero-author" href="https://henrystanley.com" target="_blank" rel="noopener">${meta.author}</a>
       </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <span class="hero-scroll-chevron"></span>
     </div>
   </div>
   <div class="layout">
@@ -95,31 +99,20 @@ for (const id of sectionIds) {
   if (el) observer.observe(el);
 }
 
-// Show TOC and title when the first paragraph scrolls out of view
+// Show TOC, title, and mobile nav once the hero scrolls out of view
 const hero = document.querySelector('.hero');
 const tocNav = document.querySelector('.toc');
 const tocTitle = document.querySelector('.toc-title');
-const firstParagraph = document.querySelector('.prose p:first-of-type');
-
-const scrollObserver = new IntersectionObserver(
-  ([entry]) => {
-    const pastIntro = !entry.isIntersecting;
-    tocNav.classList.toggle('visible', pastIntro);
-    tocTitle.classList.toggle('visible', pastIntro);
-  },
-  { threshold: 0 }
-);
-
-scrollObserver.observe(firstParagraph);
-
-// Mobile nav: show when past hero, toggle menu on tap
 const mobileNav = document.querySelector('.mobile-nav');
 const mobileToggle = document.querySelector('.mobile-nav-toggle');
 const mobileMenu = document.querySelector('.mobile-nav-menu');
 
 const heroObserver = new IntersectionObserver(
   ([entry]) => {
-    mobileNav.classList.toggle('visible', !entry.isIntersecting);
+    const pastHero = !entry.isIntersecting;
+    tocNav.classList.toggle('visible', pastHero);
+    tocTitle.classList.toggle('visible', pastHero);
+    mobileNav.classList.toggle('visible', pastHero);
     if (entry.isIntersecting) mobileMenu.classList.remove('open');
   },
   { threshold: 0 }

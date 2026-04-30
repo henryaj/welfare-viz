@@ -88,6 +88,7 @@ attempt to quantify different animals' moral weights.
   rp-welfare: Estimates from the Rethink Priorities Moral Weight Project, which combines neurophysiological and behavioural evidence into a weight for each animal.
 }}
 
+
 # Counting life-days per animal
 
 Farmed animals are very different sizes -- shrimp are tiny, and you could
@@ -111,10 +112,136 @@ beef, it'll be much smaller.
   lifedays: Combining the two, we see that shrimp, fish, eggs and chicken are by far the largest contributors to life-days.
 }}
 
-This is Part 1 of two. In Part 2, we'll combine these per-animal welfare
-weights with real-world diet composition to see how much suffering different
-diets actually cause -- and work through the surprising implications for what
-to cut back on first.
+# How good are animals' lives?
+
+We've counted how many 'days' of animal life go into different foods. But
+animals aren't all treated the same. Pasture-raised cattle likely have a
+better time than factory-farmed broiler chickens. We need to consider:
+
+- **how good their lives are** - some animals are well-treated, others subject to
+    painful procedures and poor conditions
+- **how good their deaths are** - some animals die quickly, others slowly and
+    painfully
+
+Click an animal below to see a summary of how they live and die. We provide an
+example weighting to compare how good or bad an animal's typical experience is,
+normalized to beef cows (which likely have the best lives of all farmed
+animals).
+
+{{widget:animal-lives
+  intro: Each animal's life and death can be given a rough numerical weight — how intense a typical day of their life is, and how bad the slaughter event is. Combined with their size, this gives us a "suffering-days per kg" figure that drives the final diet calculator below.
+  chicken-life:
+    Bred for unnaturally fast weight gain. Many are unable to walk as their legs
+    break under their large weight, so they starve. Kept in cramped conditions,
+    tens of thousands in a single shed. Ammonia-soaked litter causes chemical
+    burns.
+  chicken-death:
+    Chickens are shackled upside-down on a conveyor. They pass through an
+    electrified water bath to stun them, then their throats are slit causing
+    them to bleed out. Finally they enter a scalding tank to remove feathers. If
+    stunning fails then the chicken enters the scalding tank conscious.
+  eggs-life:
+    Layer hens have their beaks trimmed using a hot blade. They live in cages or
+    barns in the case of cage-free eggs, usually with less than a square foot of
+    space per bird. They can't stretch their wings or stand fully upright, and
+    might have bone fractures or osteoporosis. Male chicks do not lay eggs so
+    are destroyed when they hatch, either by gassing or maceration (grinding).
+  eggs-death:
+    When their egg production rate falls, layer hens are stunned in an
+    electrified water bath and have their throats slit.
+  pig-life:
+    Pigs have their tails docked and teeth clipped in their first week of life.
+    Males are castrated without anesthetic to ensure their meat does not taste
+    'gamey'. Typically kept in concrete pens without bedding in crowded sheds.
+    Sows are confined to gestation crates, although these are increasingly being
+    banned. 
+  pig-death:
+    Stunned by electric prong or by CO₂ gassing. CO₂ causes a suffocating
+    feeling, so the pigs thrash and vocalise for up to thirty seconds. They are
+    then hoisted up and bled.
+  beef-life:
+    Most are born on pasture and move to feedlots for the final 3-6 months of
+    life. Subjected to dehorning, branding, and castration without anesthetic.
+    Often are transported long distances which causes distress.
+  beef-death:
+    Stunned by a captive bolt gun to the forehead, then hosted up and bled.
+    Bolt misfires 1-5% of the time, requiring them to be re-stunned or ending
+    with them bled while partly conscious.
+  dairy-life:
+    Cows are artificially inseminated to keep them pregnant so they continue to
+    produce milk. Their calves are taken at birth. High lates of lameness and
+    mastitis. Mostly confined to sheds, with some time at pasture.
+  dairy-death:
+    Stunned by a captive bolt gun to the forehead, then hosted up and bled.
+    Bolt misfires 1-5% of the time, requiring them to be re-stunned or ending
+    with them bled while partly conscious.
+  salmon-life:
+    Kept in sea cages with tens of thousands of fish per pen. Often afflicted by
+    sea lice which eat through skin and flesh. High levels of mortality between
+    stocking and harvest. Mass die-offs are common. Cannot express natural
+    migration behaviours.
+  salmon-death:
+    Percussive or electrical stunning before bleed out. Some plants use
+    CO₂-saturated water with fish actively try to escape.
+  shrimp-life:
+    Kept in crowded ponds or tanks. Eyestalk ablation used to force female shrimp
+    to mature. Outbreaks of disease kill billions of shrimp annually. Sentience is
+    uncertain, but increasingly accepted.
+  shrimp-death:
+    Pond is drained and shrimp scooped into ice slurries, causing suffocation
+    and freezing. Pre-slaughter electrical stunning exists but is uncommon.
+}}
+
+# What's in a diet?
+
+Eating a different diet means eating different animals. Combining the per-kg
+weighting above with what people actually eat across the year shows which
+products dominate the total — and which levers matter most if you're trying
+to reduce your impact.
+
+The two bars below show the same diet under two framings: raw **life-days**
+(ignoring sentience or treatment) and Tomasik's **suffering-days** weighting,
+which bakes in how intensely each species likely suffers and how bad the
+slaughter event is.
+
+<!-- TODO(henry): rewrite surrounding prose — the old "cut fish and eggs
+     first" / "life-days dominated by fish" framing lives elsewhere in this
+     doc and needs to be reconciled with the new toggle now that the reader
+     can switch modes themselves. Also note: diet-composition numbers are
+     provisional (see Sources section for the UK FAO / EUMOFA TODOs).
+
+     This might also be very wrong - e.g. tomasik talks about farmed salmon but
+     below we talk about fish -->
+
+{{widget:diet-calculator
+  intro: Different diets translate to very different totals. Brits and Europeans consume more fish than Americans; vegetarians and vegans cut out most of the impact regardless of which weighting you pick.
+  european: Fish account for the most life-days in European diets, 
+  american: Americans eat more chickens and fish, with chickens the largest source of suffering.
+  uk: Brits are similar to Europeans, but score slightly better due to eating less fish.
+  vegetarian: Vegetarian diets cause drastically less suffering than diets which include meat or fish.
+  vegan: Vegan diets cut out most animal suffering, although crop farming inevitably causes some small mammals to be killed (as with all diets).
+}}
+
+These are relatively simple models — they account for how many animals get
+eaten in a given diet, how many days of each animal's life that corresponds
+to, and how much those animals likely suffer.
+
+There is a lot of uncertainty in these numbers. We haven't considered shrimp
+(increasingly thought to feel pain), the wild fish caught and fed to farmed
+fish, or the difference between factory and pasture-raised animals.
+
+<!-- TODO(henry): expand the "things not modelled" list — wild fish used as
+     feed, shrimp, insects, welfare differences between factory and
+     pasture-raised animals. -->
+
+{{break}}
+
+*If the idea that animals' experiences might differ this much already changes
+how you think, consider [donating to effective
+organisations](https://animalcharityevaluators.org/) which seek to reform the
+way we raise animals for food, [pay for
+'offsets'](https://www.farmkind.giving/) to cover the animals you consume, or
+think about where you could cut back.*
 
 
 # Sources and methodology
@@ -138,3 +265,34 @@ drawn from [Tomasik (2007, updated
 and USDA statistics. Dairy cow "edible kg" represents total milk yield over a
 six-year lifespan. Egg yield is measured in individual eggs (assuming one egg
 weighs 55g).
+
+**Diet composition.** Per-capita consumption figures vary in provenance. Fish
+counts in particular carry factor-of-two uncertainty because FAO publishes
+landings only in tonnes, and converting to kg-per-person relies on species-mix
+assumptions (mean fish weight varies by approx. 1,000× across the species a
+Westerner eats -- from 10 g sardines to 50 kg tuna).
+
+- *American*: beef 26 kg, pork 23 kg, chicken 46 kg, fish 9 kg, eggs 264,
+  milk 297 kg. From [USDA ERS Food Availability data](https://www.ers.usda.gov/data-products/food-availability-per-capita-data-system/)
+  and the 2024 USDA NASS *Livestock Slaughter Summary*, cross-referenced with
+  Harish Sethu's *[How Many Animals Does a Vegetarian Save?](https://www.countinganimals.com/how-many-animals-does-a-vegetarian-save/)*
+  (countinganimals.com, 2015).
+- *European*: beef 15 kg, pork 32 kg, chicken 25 kg, fish 23 kg, eggs 220,
+  milk 250 kg. Derived from Eurostat's *[Agricultural production --
+  livestock and meat](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Agricultural_production_-_livestock_and_meat)*
+  2024 provisional carcass-weight totals divided by EU-27 population (448m);
+  fish from EUMOFA's *[The EU Fish Market](https://eumofa.eu/the-eu-fish-market)*
+  2025 edition (22.89 kg apparent seafood consumption, 2023).
+  <!-- TODO(henry): confirm whether 22.89 kg is LWE per capita or edible weight. -->
+- *British*: beef 17 kg, pork 22 kg, chicken 34 kg, fish 18 kg, eggs 200,
+  milk 250 kg. From Defra's *[Agriculture in the United Kingdom 2024,
+  Chapter 8](https://www.gov.uk/government/statistics/agriculture-in-the-united-kingdom-2024/chapter-8-livestock)*
+  (1.18 billion broilers × approx. 1.9 kg edible weight, divided by 67m
+  population); fish from FAO Food Balance Sheets UK supply-side estimate
+  (approx. 18 kg/year).
+  <!-- TODO(henry): FAO Food Balance Sheets UK link needs fixing. -->
+- *Vegetarian*: eggs 300, milk 320. Rough estimate assuming protein
+  substitution; the lacto-ovo intake literature is thin. EPIC-Oxford and
+  NDNS both suggest vegetarian egg and dairy intake is modestly elevated
+  over omnivores.
+- *Vegan*: zero for all animal products by definition.

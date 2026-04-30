@@ -3,7 +3,7 @@
 ## Content / copy
 
 - [ ] Review DRAFT prose in `src/data/farming.js` (life/death per animal)
-- [ ] Resolve diet-composition TODOs in `copy.md` (UK FAO link, EUMOFA LWE-vs-edible, pescatarian eggs/milk proxy, fish conversion uncertainty)
+- [ ] Resolve diet-composition TODOs in `copy.md` (UK FAO link, EUMOFA LWE-vs-edible, fish conversion uncertainty)
 - [ ] Full prose pass on `copy.md` — tighten sentences, fix flow between sections
 - [ ] Rewrite the post-diet-widget prose in `copy.md` now that the diet widget is mode-toggleable (old "cut fish and eggs first" framing needs reconciling with the toggle)
 - [ ] Get feedback from Itsi and Alec
